@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "vcampos",
-    "slug": "vcampos",
+    "name": "VCampos",
+    "slug": "VCampos",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -21,10 +21,16 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.arthurpsilva.VCampos"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "d1fa789f-14df-475c-94a9-3e6190c0484b"
+      }
     }
   }
 }
