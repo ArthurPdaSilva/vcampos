@@ -30,8 +30,8 @@ export const GlassCalculationScreen = () => {
 	const { glasses } = useGlassStore((state) => state);
 
 	const calculate = () => {
-		const h = parseFloat(height);
-		const w = parseFloat(width);
+		const h = Number.parseFloat(height);
+		const w = Number.parseFloat(width);
 
 		if (Number.isNaN(h) || Number.isNaN(w)) {
 			return Alert.alert("Erro", "Altura e largura devem ser números válidos");
@@ -41,7 +41,7 @@ export const GlassCalculationScreen = () => {
 			return Alert.alert("Erro", "Altura e largura devem ser maiores que zero");
 		}
 
-		const area = h * w;
+		const areaInSquareMeters = (h * w) / 10000;
 
 		const calculated = [];
 
@@ -51,9 +51,9 @@ export const GlassCalculationScreen = () => {
 			let basePrice = 0;
 
 			if (g.type === "Temperado") {
-				basePrice = area * g.price;
+				basePrice = areaInSquareMeters * g.price;
 			} else {
-				basePrice = g.price * (area / GLASS_SHEET_SIZE);
+				basePrice = g.price * (areaInSquareMeters / GLASS_SHEET_SIZE);
 			}
 
 			const expenses = basePrice * EXPENSES_PERCENTAGE;
@@ -67,6 +67,13 @@ export const GlassCalculationScreen = () => {
 				profit,
 				finalPrice,
 			});
+		}
+
+		if (calculated.length === 0) {
+			return Alert.alert(
+				"Aviso",
+				"Nenhum vidro encontrado para o tipo selecionado",
+			);
 		}
 
 		setResults(calculated);

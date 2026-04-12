@@ -16,11 +16,13 @@ export const GlassRegistrationScreen = () => {
 		Keyboard.dismiss();
 		if (!name || !price) return Alert.alert("Erro", "Preencha todos os campos");
 
-		if (Number.isNaN(parseFloat(price))) {
+		const parsedPrice = Number.parseFloat(price);
+
+		if (Number.isNaN(parsedPrice)) {
 			return Alert.alert("Erro", "Preço deve ser um número válido");
 		}
 
-		if (Number.parseFloat(price) <= 0) {
+		if (parsedPrice <= 0) {
 			return Alert.alert("Erro", "Preço deve ser maior que zero");
 		}
 
@@ -28,7 +30,7 @@ export const GlassRegistrationScreen = () => {
 			id: Date.now().toString(),
 			name,
 			type,
-			price: parseFloat(price),
+			price: parsedPrice,
 		};
 
 		addGlass(newGlass);
