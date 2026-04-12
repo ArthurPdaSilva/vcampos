@@ -21,6 +21,7 @@ export const FormInput = ({
 			{label && <Label text={label} />}
 			<TextInput
 				placeholder={placeholder}
+				placeholderTextColor="#666"
 				style={styles.input}
 				keyboardType={keyboardType}
 				onChangeText={onChangeText}
@@ -38,6 +39,7 @@ const styles = StyleSheet.create({
 		marginBottom: 10,
 		borderRadius: 5,
 		backgroundColor: "#fff",
+		color: "#000",
 		fontSize: 16,
 	},
 });

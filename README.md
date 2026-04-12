@@ -108,6 +108,14 @@ npm run ios
 npm run web
 ```
 
+## Build (EAS)
+
+Para gerar um build de preview para Android, utilize:
+
+```bash
+eas build -p android --profile preview
+```
+
 ## Scripts
 
 Os scripts estão definidos em [package.json](package.json):

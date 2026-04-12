@@ -26,7 +26,7 @@ export const GlassListScreen = () => {
 					<View style={styles.card}>
 						<View>
 							<Text style={styles.name}>{item.name}</Text>
-							<Text>
+							<Text style={styles.infoText}>
 								{item.type} - {formatCurrencyBRL(item.price)}
 							</Text>
 						</View>
@@ -54,7 +54,8 @@ const styles = StyleSheet.create({
 		borderRadius: 8,
 		elevation: 2,
 	},
-	name: { fontWeight: "bold", fontSize: 16 },
+	name: { fontWeight: "bold", fontSize: 16, color: "#000" },
+	infoText: { color: "#000" },
 	button: {
 		backgroundColor: "#f44336",
 		padding: 10,

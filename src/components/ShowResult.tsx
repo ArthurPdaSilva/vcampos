@@ -14,9 +14,15 @@ export const ShowResult = ({ res, hideDetails }: ShowResultsProps) => {
 
 			{!hideDetails && (
 				<View style={styles.details}>
-					<Text>Preço Base: {formatCurrencyBRL(res.basePrice)}</Text>
-					<Text>Gastos (75%): {formatCurrencyBRL(res.expenses)}</Text>
-					<Text>Lucro (25%): {formatCurrencyBRL(res.profit)}</Text>
+					<Text style={styles.detailText}>
+						Preço Base: {formatCurrencyBRL(res.basePrice)}
+					</Text>
+					<Text style={styles.detailText}>
+						Gastos (75%): {formatCurrencyBRL(res.expenses)}
+					</Text>
+					<Text style={styles.detailText}>
+						Lucro (25%): {formatCurrencyBRL(res.profit)}
+					</Text>
 				</View>
 			)}
 
@@ -36,12 +42,15 @@ const styles = StyleSheet.create({
 		borderLeftWidth: 5,
 		borderLeftColor: "#4CAF50",
 	},
-	title: { fontWeight: "bold", fontSize: 18 },
+	title: { fontWeight: "bold", fontSize: 18, color: "#000" },
 	details: {
 		marginVertical: 8,
 		paddingLeft: 10,
 		borderLeftWidth: 1,
 		borderLeftColor: "#eee",
+	},
+	detailText: {
+		color: "#000",
 	},
 	finalPrice: {
 		fontWeight: "bold",

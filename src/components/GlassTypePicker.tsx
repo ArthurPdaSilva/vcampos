@@ -18,6 +18,7 @@ export const GlassTypePicker = ({ type, setType }: GlassTypePickerProps) => {
 					onValueChange={(itemValue) => setType(itemValue)}
 					dropdownIconColor="#2196F3"
 					mode="dropdown"
+					style={styles.picker}
 				>
 					<Picker.Item label="Temperado" value="Temperado" />
 					<Picker.Item label="Comum" value="Comum" />
@@ -35,5 +36,8 @@ const styles = StyleSheet.create({
 		marginTop: 5,
 		backgroundColor: "#fff",
 		justifyContent: "center",
+	},
+	picker: {
+		color: "#000",
 	},
 });

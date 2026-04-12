@@ -5,5 +5,5 @@ export const Label = ({ text }: { text: string }) => {
 };
 
 const styles = StyleSheet.create({
-	label: { fontWeight: "bold", fontSize: 16 },
+	label: { fontWeight: "bold", fontSize: 16, color: "#000" },
 });
