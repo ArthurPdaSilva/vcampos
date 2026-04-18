@@ -10,13 +10,17 @@ O app possui 3 abas principais:
 
 - Cálculo: calcula preço final de vidros com base em altura, largura, tipo e regras de negócio.
 - Cadastro: cadastra novos tipos/modelos de vidro com nome, tipo e preço.
-- Estoque: lista os vidros cadastrados e permite apagar itens.
+- Estoque: lista os vidros cadastrados e permite editar ou apagar itens.
 
 ## Funcionalidades
 
 - Cadastro de vidro com validação de campos:
   - Nome obrigatório
   - Preço numérico e maior que zero
+- Edição de vidro no estoque:
+  - Atualização de nome e preço
+  - Validação de nome obrigatório
+  - Validação de preço numérico e maior que zero
 - Classificação por tipo de vidro:
   - Temperado
   - Comum
@@ -140,7 +144,7 @@ O formatador de moeda BRL está em [src/utils/formatCurrencyBRL.ts](src/utils/fo
 1. Cadastrar os vidros na aba Cadastro.
 2. Informar medidas na aba Cálculo e escolher o tipo.
 3. Visualizar preço final e detalhes (gastos/lucro).
-4. Gerenciar itens cadastrados na aba Estoque.
+4. Gerenciar itens cadastrados na aba Estoque (editar ou remover).
 
 ## Observações
 
