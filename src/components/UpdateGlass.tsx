@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
+import { Controller, type FieldErrors, useForm } from "react-hook-form";
 import {
 	Alert,
 	Keyboard,
@@ -8,6 +10,10 @@ import {
 	TouchableOpacity,
 	View,
 } from "react-native";
+import {
+	type UpdateGlassFormData,
+	updateGlassSchema,
+} from "../schemas/updateGlassSchema";
 import { useGlassStore } from "../stores/GlassStore";
 import type { Glass, GlassUpdate } from "../types";
 import { FormInput } from "./FormInput";
@@ -19,42 +25,48 @@ type UpdateGlassProps = {
 };
 
 export const UpdateGlass = ({ visible, glass, onClose }: UpdateGlassProps) => {
-	const [name, setName] = useState("");
-	const [price, setPrice] = useState("");
 	const { updateGlass } = useGlassStore((state) => state);
+	const { control, handleSubmit, reset } = useForm<UpdateGlassFormData>({
+		resolver: zodResolver(updateGlassSchema),
+		defaultValues: {
+			name: "",
+			price: "",
+		},
+	});
 
 	useEffect(() => {
-		if (!glass) return;
+		if (!glass) {
+			reset({ name: "", price: "" });
+			return;
+		}
 
-		setName(glass.name);
-		setPrice(String(glass.price));
-	}, [glass]);
+		reset({
+			name: glass.name,
+			price: String(glass.price),
+		});
+	}, [glass, reset]);
 
-	const handleUpdateGlass = () => {
+	const handleUpdateGlass = ({ name, price }: UpdateGlassFormData) => {
 		Keyboard.dismiss();
 
 		if (!glass) return;
-		if (!name || !price) return Alert.alert("Erro", "Preencha nome e preço");
-
-		const parsedPrice = Number.parseFloat(price);
-
-		if (Number.isNaN(parsedPrice)) {
-			return Alert.alert("Erro", "Preço deve ser um número válido");
-		}
-
-		if (parsedPrice <= 0) {
-			return Alert.alert("Erro", "Preço deve ser maior que zero");
-		}
 
 		const update: GlassUpdate = {
 			id: glass.id,
-			name,
-			price: parsedPrice,
+			name: name.trim(),
+			price: Number.parseFloat(price),
 		};
 
 		updateGlass(update);
 		onClose();
 		Alert.alert("Sucesso", "Vidro atualizado!");
+	};
+
+	const handleInvalidSubmit = (errors: FieldErrors<UpdateGlassFormData>) => {
+		const errorMessage = errors.name?.message ?? errors.price?.message;
+
+		if (!errorMessage) return;
+		Alert.alert("Erro", errorMessage);
 	};
 
 	return (
@@ -68,19 +80,31 @@ export const UpdateGlass = ({ visible, glass, onClose }: UpdateGlassProps) => {
 				<View style={styles.modalContent}>
 					<Text style={styles.title}>Atualizar vidro</Text>
 
-					<FormInput
-						label="Nome do Vidro"
-						placeholder="Ex: Blindex 8mm"
-						onChangeText={setName}
-						value={name}
+					<Controller
+						control={control}
+						name="name"
+						render={({ field: { onChange, value } }) => (
+							<FormInput
+								label="Nome do Vidro"
+								placeholder="Ex: Blindex 8mm"
+								onChangeText={onChange}
+								value={value}
+							/>
+						)}
 					/>
 
-					<FormInput
-						label="Preço em R$"
-						placeholder="0.00"
-						onChangeText={setPrice}
-						keyboardType="numeric"
-						value={price}
+					<Controller
+						control={control}
+						name="price"
+						render={({ field: { onChange, value } }) => (
+							<FormInput
+								label="Preço em R$"
+								placeholder="0.00"
+								onChangeText={onChange}
+								keyboardType="numeric"
+								value={value}
+							/>
+						)}
 					/>
 
 					<View style={styles.actions}>
@@ -89,7 +113,7 @@ export const UpdateGlass = ({ visible, glass, onClose }: UpdateGlassProps) => {
 						</TouchableOpacity>
 						<TouchableOpacity
 							style={styles.saveButton}
-							onPress={handleUpdateGlass}
+							onPress={handleSubmit(handleUpdateGlass, handleInvalidSubmit)}
 						>
 							<Text style={styles.buttonText}>Salvar</Text>
 						</TouchableOpacity>

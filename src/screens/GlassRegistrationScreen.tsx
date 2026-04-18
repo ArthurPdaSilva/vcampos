@@ -1,63 +1,86 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
+import { Controller, type FieldErrors, useForm } from "react-hook-form";
 import { Alert, Keyboard, StyleSheet, View } from "react-native";
 import { FormInput } from "../components/FormInput";
 import { GlassTypePicker } from "../components/GlassTypePicker";
 import { PrimaryButton } from "../components/PrimaryButton";
+import {
+	type GlassRegistrationFormData,
+	glassRegistrationSchema,
+} from "../schemas/glassRegistrationSchema";
 import { useGlassStore } from "../stores/GlassStore";
 import type { GlassType } from "../types";
 
 export const GlassRegistrationScreen = () => {
-	const [name, setName] = useState("");
 	const [type, setType] = useState<GlassType>("Temperado");
-	const [price, setPrice] = useState("");
 	const { addGlass } = useGlassStore((state) => state);
+	const { control, handleSubmit, reset } = useForm<GlassRegistrationFormData>({
+		resolver: zodResolver(glassRegistrationSchema),
+		defaultValues: {
+			name: "",
+			price: "",
+		},
+	});
 
-	const handleSave = async () => {
+	const handleSave = ({ name, price }: GlassRegistrationFormData) => {
 		Keyboard.dismiss();
-		if (!name || !price) return Alert.alert("Erro", "Preencha todos os campos");
-
-		const parsedPrice = Number.parseFloat(price);
-
-		if (Number.isNaN(parsedPrice)) {
-			return Alert.alert("Erro", "Preço deve ser um número válido");
-		}
-
-		if (parsedPrice <= 0) {
-			return Alert.alert("Erro", "Preço deve ser maior que zero");
-		}
 
 		const newGlass = {
 			id: Date.now().toString(),
-			name,
+			name: name.trim(),
 			type,
-			price: parsedPrice,
+			price: Number.parseFloat(price),
 		};
 
 		addGlass(newGlass);
-		setName("");
-		setPrice("");
+		reset({ name: "", price: "" });
 		Alert.alert("Sucesso", "Vidro cadastrado!");
+	};
+
+	const handleInvalidSubmit = (
+		errors: FieldErrors<GlassRegistrationFormData>,
+	) => {
+		const errorMessage = errors.name?.message ?? errors.price?.message;
+
+		if (!errorMessage) return;
+		Alert.alert("Erro", errorMessage);
 	};
 
 	return (
 		<View style={styles.container}>
-			<FormInput
-				label="Nome do Vidro"
-				placeholder="Ex: Blindex 8mm"
-				onChangeText={setName}
-				value={name}
+			<Controller
+				control={control}
+				name="name"
+				render={({ field: { onChange, value } }) => (
+					<FormInput
+						label="Nome do Vidro"
+						placeholder="Ex: Blindex 8mm"
+						onChangeText={onChange}
+						value={value}
+					/>
+				)}
 			/>
 
-			<FormInput
-				label="Preço em R$"
-				placeholder="0.00"
-				onChangeText={setPrice}
-				keyboardType="numeric"
-				value={price}
+			<Controller
+				control={control}
+				name="price"
+				render={({ field: { onChange, value } }) => (
+					<FormInput
+						label="Preço em R$"
+						placeholder="0.00"
+						onChangeText={onChange}
+						keyboardType="numeric"
+						value={value}
+					/>
+				)}
 			/>
 
 			<GlassTypePicker type={type} setType={setType} />
-			<PrimaryButton title="Cadastrar Vidro" onPress={handleSave} />
+			<PrimaryButton
+				title="Cadastrar Vidro"
+				onPress={handleSubmit(handleSave, handleInvalidSubmit)}
+			/>
 		</View>
 	);
 };

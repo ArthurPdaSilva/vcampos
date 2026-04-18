@@ -26,6 +26,8 @@ O app possui 3 abas principais:
   - Comum
 - Cálculo de preço final por medida (altura e largura)
 - Exibição opcional de detalhes do cálculo (ocultar/mostrar)
+- Validação de formulários com React Hook Form + Zod
+- Schemas separados por formulário para centralizar regras de validação
 - Persistência local com AsyncStorage (dados continuam salvos após fechar o app)
 - Exibição de moeda no padrão brasileiro (pt-BR)
 
@@ -68,6 +70,9 @@ finalPrice = basePrice + expenses + profit
 - React Native
 - Expo
 - TypeScript
+- React Hook Form
+- Zod
+- @hookform/resolvers (zodResolver)
 - React Navigation (Bottom Tabs)
 - Zustand + persist middleware
 - AsyncStorage
@@ -77,6 +82,7 @@ finalPrice = basePrice + expenses + profit
 ```text
 src/
   components/      # Componentes reutilizáveis de UI
+  schemas/         # Schemas Zod para validação dos formulários
   screens/         # Telas principais (Cálculo, Cadastro, Estoque)
   stores/          # Estado global e persistência
   utils/           # Funções utilitárias (ex.: moeda BRL)
