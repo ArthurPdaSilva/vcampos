@@ -4,6 +4,7 @@ import { Controller, type FieldErrors, useForm } from "react-hook-form";
 import {
 	Alert,
 	Keyboard,
+	KeyboardAvoidingView,
 	Modal,
 	StyleSheet,
 	Text,
@@ -77,57 +78,64 @@ export const UpdateGlass = ({ visible, glass, onClose }: UpdateGlassProps) => {
 			animationType="slide"
 			onRequestClose={onClose}
 		>
-			<TouchableWithoutFeedback onPress={onClose}>
-				<View style={styles.overlay}>
-					<View style={styles.modalContent}>
-						<Text style={styles.title}>Atualizar vidro</Text>
+			<KeyboardAvoidingView
+				style={styles.keyboardAvoidingContainer}
+				behavior={"padding"}
+			>
+				<TouchableWithoutFeedback onPress={onClose}>
+					<View style={styles.overlay}>
+						<View style={styles.modalContent}>
+							<Text style={styles.title}>Atualizar vidro</Text>
+							<Controller
+								control={control}
+								name="name"
+								render={({ field: { onChange, value } }) => (
+									<FormInput
+										label="Nome do Vidro"
+										placeholder="Ex: Blindex 8mm"
+										onChangeText={onChange}
+										value={value}
+									/>
+								)}
+							/>
 
-						<Controller
-							control={control}
-							name="name"
-							render={({ field: { onChange, value } }) => (
-								<FormInput
-									label="Nome do Vidro"
-									placeholder="Ex: Blindex 8mm"
-									onChangeText={onChange}
-									value={value}
-								/>
-							)}
-						/>
+							<Controller
+								control={control}
+								name="price"
+								render={({ field: { onChange, value } }) => (
+									<FormInput
+										label="Preço em R$"
+										placeholder="0.00"
+										onChangeText={onChange}
+										keyboardType="numeric"
+										value={value}
+									/>
+								)}
+							/>
 
-						<Controller
-							control={control}
-							name="price"
-							render={({ field: { onChange, value } }) => (
-								<FormInput
-									label="Preço em R$"
-									placeholder="0.00"
-									onChangeText={onChange}
-									keyboardType="numeric"
-									value={value}
-								/>
-							)}
-						/>
-
-						<View style={styles.actions}>
-							<TouchableOpacity style={styles.cancelButton} onPress={onClose}>
-								<Text style={styles.buttonText}>Cancelar</Text>
-							</TouchableOpacity>
-							<TouchableOpacity
-								style={styles.saveButton}
-								onPress={handleSubmit(handleUpdateGlass, handleInvalidSubmit)}
-							>
-								<Text style={styles.buttonText}>Salvar</Text>
-							</TouchableOpacity>
+							<View style={styles.actions}>
+								<TouchableOpacity style={styles.cancelButton} onPress={onClose}>
+									<Text style={styles.buttonText}>Cancelar</Text>
+								</TouchableOpacity>
+								<TouchableOpacity
+									style={styles.saveButton}
+									onPress={handleSubmit(handleUpdateGlass, handleInvalidSubmit)}
+								>
+									<Text style={styles.buttonText}>Salvar</Text>
+								</TouchableOpacity>
+							</View>
 						</View>
 					</View>
-				</View>
-			</TouchableWithoutFeedback>
+				</TouchableWithoutFeedback>
+			</KeyboardAvoidingView>
 		</Modal>
 	);
 };
 
 const styles = StyleSheet.create({
+	keyboardAvoidingContainer: {
+		flex: 1,
+	},
 	overlay: {
 		flex: 1,
 		justifyContent: "flex-end",
