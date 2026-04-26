@@ -1,6 +1,7 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
+import { BudgetScreen } from "./screens/BudgetScreen";
 import { GlassCalculationScreen } from "./screens/GlassCalculationScreen";
 import { GlassListScreen } from "./screens/GlassListScreen";
 import { GlassRegistrationScreen } from "./screens/GlassRegistrationScreen";
@@ -55,6 +56,21 @@ export const Route = () => {
 						},
 					}}
 					component={GlassListScreen}
+				/>
+				<Tab.Screen
+					name="Orçamento"
+					options={{
+						tabBarIcon(props) {
+							return (
+								<MaterialCommunityIcons
+									name="file-document-outline"
+									size={props.size}
+									color={props.color}
+								/>
+							);
+						},
+					}}
+					component={BudgetScreen}
 				/>
 			</Tab.Navigator>
 		</NavigationContainer>

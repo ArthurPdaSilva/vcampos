@@ -1,16 +1,39 @@
-import { StyleSheet, Text, View } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useBudgetStore } from "../stores/BudgetStore";
 import type { CalculatedGlass } from "../types";
 import { formatCurrencyBRL } from "../utils/formatCurrencyBRL";
 
-type ShowResultsProps = {
+type CalculationItemProps = {
 	res: CalculatedGlass;
 	hideDetails: boolean;
 };
 
-export const ShowResult = ({ res, hideDetails }: ShowResultsProps) => {
+export const CalculationItem = ({ res, hideDetails }: CalculationItemProps) => {
+	const { addBudgetItem } = useBudgetStore((state) => state);
+
+	const handleAddToBudget = () => {
+		addBudgetItem({
+			description: res.name,
+			value: res.basePrice,
+			finalValue: res.finalPrice,
+			quantity: 1,
+		});
+		Alert.alert("Sucesso", "Item adicionado ao orçamento!");
+	};
+
 	return (
 		<View key={res.id} style={styles.resultCard}>
-			<Text style={styles.title}>{res.name}</Text>
+			<View style={styles.header}>
+				<Text style={styles.title}>{res.name}</Text>
+				<TouchableOpacity
+					onPress={handleAddToBudget}
+					style={styles.addButton}
+					accessibilityLabel="Adicionar ao orçamento"
+				>
+					<MaterialIcons name="add-circle" size={24} color="#2E7D32" />
+				</TouchableOpacity>
+			</View>
 
 			{!hideDetails && (
 				<View style={styles.details}>
@@ -43,6 +66,14 @@ const styles = StyleSheet.create({
 		borderLeftColor: "#4CAF50",
 	},
 	title: { fontWeight: "bold", fontSize: 18, color: "#000" },
+	header: {
+		flexDirection: "row",
+		justifyContent: "space-between",
+		alignItems: "center",
+	},
+	addButton: {
+		padding: 2,
+	},
 	details: {
 		marginVertical: 8,
 		paddingLeft: 10,

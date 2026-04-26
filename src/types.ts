@@ -18,6 +18,14 @@ export type CalculatedGlass = Glass & {
 	finalPrice: number;
 };
 
+export type BudgetItem = {
+	id: string;
+	description: string;
+	quantity: number;
+	value: number;
+	finalValue: number;
+};
+
 export const GLASS_SHEET_SIZE = getEnvNumber(
 	process.env.EXPO_PUBLIC_GLASS_SHEET_SIZE,
 	3.38,

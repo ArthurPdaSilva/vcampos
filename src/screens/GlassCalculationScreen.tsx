@@ -3,17 +3,17 @@ import { useState } from "react";
 import { Controller, type FieldErrors, useForm } from "react-hook-form";
 import {
 	Alert,
+	FlatList,
 	Keyboard,
-	ScrollView,
 	StyleSheet,
 	Text,
 	TouchableOpacity,
 	View,
 } from "react-native";
+import { CalculationItem } from "../components/CalculationItem";
 import { FormInput } from "../components/FormInput";
 import { GlassTypePicker } from "../components/GlassTypePicker";
 import { PrimaryButton } from "../components/PrimaryButton";
-import { ShowResult } from "../components/ShowResult";
 import {
 	type GlassCalculationFormData,
 	glassCalculationSchema,
@@ -93,7 +93,7 @@ export const GlassCalculationScreen = () => {
 	};
 
 	return (
-		<ScrollView style={styles.container}>
+		<View style={styles.container}>
 			<View style={styles.form}>
 				<Controller
 					control={control}
@@ -137,10 +137,14 @@ export const GlassCalculationScreen = () => {
 				</Text>
 			</TouchableOpacity>
 
-			{results.map((res) => (
-				<ShowResult key={res.id} res={res} hideDetails={hideDetails} />
-			))}
-		</ScrollView>
+			<FlatList
+				data={results}
+				keyExtractor={(item) => item.id.toString()}
+				renderItem={({ item }) => (
+					<CalculationItem res={item} hideDetails={hideDetails} />
+				)}
+			/>
+		</View>
 	);
 };
 
