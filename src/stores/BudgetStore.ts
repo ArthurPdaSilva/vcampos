@@ -20,7 +20,7 @@ export const useBudgetStore = create<BudgetState>()(
 
 			getTotalBudgetValue: () => {
 				return get().budgetItems.reduce(
-					(total, item) => total + item.finalValue * item.quantity,
+					(total, item) => total + item.finalValue,
 					0,
 				);
 			},
@@ -44,7 +44,9 @@ export const useBudgetStore = create<BudgetState>()(
 			updateBudgetItemQuantity: (id, quantity) => {
 				set({
 					budgetItems: get().budgetItems.map((item) =>
-						item.id === id ? { ...item, quantity } : item,
+						item.id === id
+							? { ...item, quantity, finalValue: item.value * quantity }
+							: item,
 					),
 				});
 			},

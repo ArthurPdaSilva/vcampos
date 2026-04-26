@@ -10,6 +10,15 @@
 		},
 		"preview": {
 			"distribution": "internal",
+			"env": {
+				"EXPO_PUBLIC_GLASS_SHEET_SIZE": "3.38",
+				"EXPO_PUBLIC_EXPENSES_PERCENTAGE": "0.75",
+				"EXPO_PUBLIC_PROFIT_PERCENTAGE": "0.25",
+				"EXPO_PUBLIC_COMPANY_ADDRESS": "Rua da Costa Leao",
+				"EXPO_PUBLIC_COMPANY_CNPJ": "42.802.882.0001-59",
+				"EXPO_PUBLIC_COMPANY_PHONE": "(83) 99869-5797",
+				"EXPO_PUBLIC_COMPANY_INSTAGRAM": "@vidracariacampos"
+			},
 			"android": {
 				"buildType": "apk"
 			}

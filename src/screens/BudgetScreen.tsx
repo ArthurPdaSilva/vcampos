@@ -55,7 +55,6 @@ export const BudgetScreen = () => {
 		>
 			<View style={styles.container}>
 				<FlatList
-					// style={{ maxHeight: "3%" }}
 					data={budgetItems}
 					keyExtractor={(item) => item.id}
 					renderItem={({ item }) => <BudgetListItem item={item} />}

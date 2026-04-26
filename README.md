@@ -6,11 +6,12 @@ O objetivo do projeto é centralizar o cadastro de vidros, facilitar o cálculo 
 
 ## Visão Geral
 
-O app possui 3 abas principais:
+O app possui 4 abas principais:
 
 - Cálculo: calcula preço final de vidros com base em altura, largura, tipo e regras de negócio.
 - Cadastro: cadastra novos tipos/modelos de vidro com nome, tipo e preço.
 - Estoque: lista os vidros cadastrados e permite editar ou apagar itens.
+- Orçamento: lista itens adicionados no cálculo, permite ajustes e gera PDF para compartilhamento.
 
 ## Funcionalidades
 
@@ -26,6 +27,14 @@ O app possui 3 abas principais:
   - Comum
 - Cálculo de preço final por medida (altura e largura)
 - Exibição opcional de detalhes do cálculo (ocultar/mostrar)
+- Adição de itens ao orçamento a partir da tela de Cálculo
+- Gerenciamento do orçamento:
+  - Atualização de quantidade
+  - Atualização de descrição
+  - Remoção de itens
+  - Cálculo automático do valor total
+- Geração de orçamento em PDF
+- Compartilhamento do PDF (quando disponível no dispositivo)
 - Validação de formulários com React Hook Form + Zod
 - Schemas separados por formulário para centralizar regras de validação
 - Persistência local com AsyncStorage (dados continuam salvos após fechar o app)
@@ -141,6 +150,10 @@ A persistência é feita com Zustand + AsyncStorage em [src/stores/GlassStore.ts
 
 - `glass-storage`
 
+Para os dados de orçamento, a persistência é feita em [src/stores/BudgetStore.ts](src/stores/BudgetStore.ts), usando a chave:
+
+- `budget-storage`
+
 ## Formatação de Moeda
 
 O formatador de moeda BRL está em [src/utils/formatCurrencyBRL.ts](src/utils/formatCurrencyBRL.ts) e é utilizado nas telas/componentes para exibir valores como `R$ 1.234,56`.
@@ -150,7 +163,29 @@ O formatador de moeda BRL está em [src/utils/formatCurrencyBRL.ts](src/utils/fo
 1. Cadastrar os vidros na aba Cadastro.
 2. Informar medidas na aba Cálculo e escolher o tipo.
 3. Visualizar preço final e detalhes (gastos/lucro).
-4. Gerenciar itens cadastrados na aba Estoque (editar ou remover).
+4. Adicionar itens ao orçamento diretamente a partir do cálculo.
+5. Revisar itens e total na aba Orçamento.
+6. Gerar e compartilhar o PDF do orçamento.
+7. Gerenciar itens cadastrados na aba Estoque (editar ou remover).
+
+## Aba de Orçamento
+
+A aba Orçamento foi criada para consolidar os itens calculados e facilitar o envio de proposta ao cliente.
+
+Principais recursos:
+
+- Listagem de itens adicionados no orçamento
+- Edição de quantidade e descrição de cada item
+- Cálculo automático do total geral
+- Geração de PDF em layout de orçamento
+- Compartilhamento do arquivo gerado
+
+O PDF é montado em [src/utils/buildBudgetPdfHtml.ts](src/utils/buildBudgetPdfHtml.ts) e usa dados da empresa via variáveis de ambiente:
+
+- `EXPO_PUBLIC_COMPANY_ADDRESS`
+- `EXPO_PUBLIC_COMPANY_CNPJ`
+- `EXPO_PUBLIC_COMPANY_PHONE`
+- `EXPO_PUBLIC_COMPANY_INSTAGRAM`
 
 ## Observações
 

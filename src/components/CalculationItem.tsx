@@ -15,7 +15,7 @@ export const CalculationItem = ({ res, hideDetails }: CalculationItemProps) => {
 	const handleAddToBudget = () => {
 		addBudgetItem({
 			description: res.name,
-			value: res.basePrice,
+			value: res.finalPrice,
 			finalValue: res.finalPrice,
 			quantity: 1,
 		});
