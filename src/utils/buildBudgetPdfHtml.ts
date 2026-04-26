@@ -37,7 +37,7 @@ export const buildBudgetPdfHtml = (
 					<td>${item.quantity}</td>
 					<td>${description}</td>
 					<td>${formatCurrencyBRL(item.value)}</td>
-					<td>${formatCurrencyBRL(item.finalValue * item.quantity)}</td>
+					<td>${formatCurrencyBRL(item.finalValue)}</td>
 				</tr>
 			`;
 		})
