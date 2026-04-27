@@ -43,7 +43,7 @@ export const CalculationItem = ({ res, hideDetails }: CalculationItemProps) => {
 				</TouchableOpacity>
 			</View>
 
-			{!hideDetails && (
+			{!hideDetails && res.type !== "Outro" && (
 				<View style={styles.details}>
 					<Text style={styles.detailText}>
 						Preço Base: {formatCurrencyBRL(res.basePrice)}

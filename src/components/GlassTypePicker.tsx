@@ -22,6 +22,7 @@ export const GlassTypePicker = ({ type, setType }: GlassTypePickerProps) => {
 				>
 					<Picker.Item label="Temperado" value="Temperado" />
 					<Picker.Item label="Comum" value="Comum" />
+					<Picker.Item label="Outro" value="Outro" />
 				</Picker>
 			</View>
 		</>

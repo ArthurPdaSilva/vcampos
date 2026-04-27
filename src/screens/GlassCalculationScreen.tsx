@@ -51,16 +51,16 @@ export const GlassCalculationScreen = () => {
 		for (const g of glasses) {
 			if (g.type !== type) continue;
 
-			let basePrice = 0;
+			const calculators = {
+				Comum: g.price * (areaInSquareMeters / GLASS_SHEET_SIZE),
+				Temperado: areaInSquareMeters * g.price,
+				Outro: g.price,
+			};
 
-			if (g.type === "Temperado") {
-				basePrice = areaInSquareMeters * g.price;
-			} else {
-				basePrice = g.price * (areaInSquareMeters / GLASS_SHEET_SIZE);
-			}
-
-			const expenses = basePrice * EXPENSES_PERCENTAGE;
-			const profit = basePrice * PROFIT_PERCENTAGE;
+			const basePrice = calculators[g.type];
+			const isOutro = g.type === "Outro";
+			const expenses = isOutro ? 0 : basePrice * EXPENSES_PERCENTAGE;
+			const profit = isOutro ? 0 : basePrice * PROFIT_PERCENTAGE;
 			const finalPrice = basePrice + expenses + profit;
 
 			calculated.push({

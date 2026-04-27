@@ -1,6 +1,6 @@
 import { getEnvNumber } from "./utils/getEnvNumber";
 
-export type GlassType = "Temperado" | "Comum";
+export type GlassType = "Temperado" | "Comum" | "Outro";
 
 export type Glass = {
 	id: string;
