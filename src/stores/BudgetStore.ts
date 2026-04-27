@@ -6,10 +6,9 @@ import type { BudgetItem } from "../types";
 interface BudgetState {
 	budgetItems: BudgetItem[];
 	discount: string;
+	totalValue: number;
 	setDiscount: (value: string) => void;
 	clearBudget: () => void;
-	getTotalWithDiscount: () => number;
-	getTotalBudgetValue: () => number;
 	addBudgetItem: (item: Omit<BudgetItem, "id">) => void;
 	updateBudgetItemQuantity: (id: string, quantity: number) => void;
 	updateBudgetItemDescription: (id: string, description: string) => void;
@@ -22,25 +21,10 @@ export const useBudgetStore = create<BudgetState>()(
 		(set, get) => ({
 			budgetItems: [],
 			discount: "",
+			totalValue: 0,
 
 			setDiscount: (value) => {
 				set({ discount: value });
-			},
-
-			getTotalWithDiscount: () => {
-				const total = get().getTotalBudgetValue();
-				const discountValue = parseFloat(get().discount.replace(",", "."));
-				if (!Number.isNaN(discountValue) && discountValue > 0) {
-					return total - discountValue;
-				}
-				return total;
-			},
-
-			getTotalBudgetValue: () => {
-				return get().budgetItems.reduce(
-					(total, item) => total + item.finalValue,
-					0,
-				);
 			},
 
 			clearBudget: () => {
@@ -57,6 +41,7 @@ export const useBudgetStore = create<BudgetState>()(
 								id: `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
 							},
 						],
+						totalValue: get().totalValue + item.finalValue,
 					});
 				}
 			},
@@ -68,6 +53,12 @@ export const useBudgetStore = create<BudgetState>()(
 							? { ...item, quantity, finalValue: item.value * quantity }
 							: item,
 					),
+					totalValue: get().budgetItems.reduce((total, item) => {
+						if (item.id === id) {
+							return total + item.value * quantity;
+						}
+						return total + item.finalValue;
+					}, 0),
 				});
 			},
 
@@ -82,6 +73,12 @@ export const useBudgetStore = create<BudgetState>()(
 			removeBudgetItem: (id) => {
 				set({
 					budgetItems: get().budgetItems.filter((item) => item.id !== id),
+					totalValue: get().budgetItems.reduce((total, item) => {
+						if (item.id === id) {
+							return total;
+						}
+						return total + item.finalValue;
+					}, 0),
 				});
 			},
 

@@ -30,7 +30,7 @@ import {
 export const GlassCalculationScreen = () => {
 	const [type, setType] = useState<GlassType>("Temperado");
 	const [results, setResults] = useState<CalculatedGlass[]>([]);
-	const [hideDetails, setHideDetails] = useState(false);
+	const [hideDetails, setHideDetails] = useState(true);
 	const { glasses } = useGlassStore((state) => state);
 	const { control, handleSubmit } = useForm<GlassCalculationFormData>({
 		resolver: zodResolver(glassCalculationSchema),

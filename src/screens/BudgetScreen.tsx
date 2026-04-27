@@ -17,18 +17,13 @@ import { buildBudgetPdfHtml } from "../utils/buildBudgetPdfHtml";
 import { formatCurrencyBRL } from "../utils/formatCurrencyBRL";
 
 export const BudgetScreen = () => {
-	const {
-		budgetItems,
-		clearBudget,
-		discount,
-		setDiscount,
-		getTotalBudgetValue,
-	} = useBudgetStore((state) => state);
+	const { budgetItems, clearBudget, discount, setDiscount, totalValue } =
+		useBudgetStore((state) => state);
 
 	const totalWithDiscount = useMemo(() => {
 		const discountValue = Number.parseFloat(discount.replace(",", ".") || "0");
-		return getTotalBudgetValue() - discountValue;
-	}, [discount, getTotalBudgetValue]);
+		return totalValue - discountValue;
+	}, [discount, totalValue]);
 
 	const handleGenerateBudgetPdf = async () => {
 		if (budgetItems.length === 0) {
@@ -37,7 +32,6 @@ export const BudgetScreen = () => {
 		}
 
 		try {
-			const totalValue = getTotalBudgetValue();
 			const html = buildBudgetPdfHtml({ budgetItems, discount, totalValue });
 			const { uri } = await Print.printToFileAsync({ html });
 
