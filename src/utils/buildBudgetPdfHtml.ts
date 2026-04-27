@@ -9,10 +9,24 @@ const escapeHtml = (value: string) =>
 		.replaceAll('"', "&quot;")
 		.replaceAll("'", "&#39;");
 
-export const buildBudgetPdfHtml = (
-	budgetItems: BudgetItem[],
-	totalValue: number,
-) => {
+type BudgetPdfData = {
+	budgetItems: BudgetItem[];
+	discount: string;
+	totalValue: number;
+};
+
+export const buildBudgetPdfHtml = ({
+	budgetItems,
+	discount,
+	totalValue,
+}: BudgetPdfData) => {
+	const hasDiscount = discount !== "";
+	const parsedDiscount = Number.parseFloat(discount.replace(",", ".") || "0");
+	const discountValue = Number.isFinite(parsedDiscount) ? parsedDiscount : 0;
+	const finalTotalValue = hasDiscount
+		? Math.max(totalValue - discountValue, 0)
+		: totalValue;
+
 	const companyAddress = escapeHtml(
 		process.env.EXPO_PUBLIC_COMPANY_ADDRESS?.trim() || "Não informado",
 	);
@@ -42,6 +56,27 @@ export const buildBudgetPdfHtml = (
 			`;
 		})
 		.join("");
+
+	const totalRows = hasDiscount
+		? `
+			<tr>
+				<td colspan="2"></td>
+				<td class="total-label">Subtotal</td>
+				<td>${formatCurrencyBRL(totalValue)}</td>
+			</tr>
+			<tr>
+				<td colspan="2"></td>
+				<td class="total-label">Total</td>
+				<td>${formatCurrencyBRL(finalTotalValue)}</td>
+			</tr>
+		`
+		: `
+			<tr>
+				<td colspan="2"></td>
+				<td class="total-label">Total</td>
+				<td>${formatCurrencyBRL(totalValue)}</td>
+			</tr>
+		`;
 
 	return `
 		<!DOCTYPE html>
@@ -192,11 +227,7 @@ export const buildBudgetPdfHtml = (
 						${rows}
 					</tbody>
 					<tfoot>
-						<tr>
-							<td colspan="2"></td>
-							<td class="total-label">Total</td>
-							<td>${formatCurrencyBRL(totalValue)}</td>
-						</tr>
+						${totalRows}
 					</tfoot>
 				</table>
 

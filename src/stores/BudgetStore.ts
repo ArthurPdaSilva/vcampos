@@ -5,7 +5,10 @@ import type { BudgetItem } from "../types";
 
 interface BudgetState {
 	budgetItems: BudgetItem[];
+	discount: string;
+	setDiscount: (value: string) => void;
 	clearBudget: () => void;
+	getTotalWithDiscount: () => number;
 	getTotalBudgetValue: () => number;
 	addBudgetItem: (item: Omit<BudgetItem, "id">) => void;
 	updateBudgetItemQuantity: (id: string, quantity: number) => void;
@@ -17,6 +20,20 @@ export const useBudgetStore = create<BudgetState>()(
 	persist(
 		(set, get) => ({
 			budgetItems: [],
+			discount: "",
+
+			setDiscount: (value) => {
+				set({ discount: value });
+			},
+
+			getTotalWithDiscount: () => {
+				const total = get().getTotalBudgetValue();
+				const discountValue = parseFloat(get().discount.replace(",", "."));
+				if (!Number.isNaN(discountValue) && discountValue > 0) {
+					return total - discountValue;
+				}
+				return total;
+			},
 
 			getTotalBudgetValue: () => {
 				return get().budgetItems.reduce(

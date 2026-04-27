@@ -1,5 +1,6 @@
 import * as Print from "expo-print";
 import * as Sharing from "expo-sharing";
+import { useMemo } from "react";
 import {
 	Alert,
 	FlatList,
@@ -9,15 +10,25 @@ import {
 	View,
 } from "react-native";
 import { BudgetListItem } from "../components/BudgetListItem";
+import { FormInput } from "../components/FormInput";
 import { PrimaryButton } from "../components/PrimaryButton";
 import { useBudgetStore } from "../stores/BudgetStore";
 import { buildBudgetPdfHtml } from "../utils/buildBudgetPdfHtml";
 import { formatCurrencyBRL } from "../utils/formatCurrencyBRL";
 
 export const BudgetScreen = () => {
-	const { budgetItems, clearBudget, getTotalBudgetValue } = useBudgetStore(
-		(state) => state,
-	);
+	const {
+		budgetItems,
+		clearBudget,
+		discount,
+		setDiscount,
+		getTotalBudgetValue,
+	} = useBudgetStore((state) => state);
+
+	const totalWithDiscount = useMemo(() => {
+		const discountValue = Number.parseFloat(discount.replace(",", ".") || "0");
+		return getTotalBudgetValue() - discountValue;
+	}, [discount, getTotalBudgetValue]);
 
 	const handleGenerateBudgetPdf = async () => {
 		if (budgetItems.length === 0) {
@@ -27,7 +38,7 @@ export const BudgetScreen = () => {
 
 		try {
 			const totalValue = getTotalBudgetValue();
-			const html = buildBudgetPdfHtml(budgetItems, totalValue);
+			const html = buildBudgetPdfHtml({ budgetItems, discount, totalValue });
 			const { uri } = await Print.printToFileAsync({ html });
 
 			const canShare = await Sharing.isAvailableAsync();
@@ -65,15 +76,25 @@ export const BudgetScreen = () => {
 					}
 				/>
 				{budgetItems.length !== 0 && (
-					<View style={styles.totalContainer}>
-						<Text style={styles.totalLabel}>Valor Total:</Text>
-						<Text style={styles.totalValue}>
-							{formatCurrencyBRL(getTotalBudgetValue())}
-						</Text>
-					</View>
+					<>
+						<View style={styles.discountContainer}>
+							<FormInput
+								label="Desconto em R$"
+								placeholder="0,00"
+								keyboardType="numeric"
+								value={discount}
+								onChangeText={setDiscount}
+							/>
+						</View>
+						<View style={styles.totalContainer}>
+							<Text style={styles.totalLabel}>Valor Total:</Text>
+							<Text style={styles.totalValue}>
+								{formatCurrencyBRL(totalWithDiscount)}
+							</Text>
+						</View>
+					</>
 				)}
 
-				{/* Botão de gerar orçamento */}
 				<PrimaryButton
 					title="Gerar Orçamento"
 					onPress={handleGenerateBudgetPdf}
@@ -98,10 +119,24 @@ const styles = StyleSheet.create({
 		marginTop: 40,
 		fontSize: 16,
 	},
+	discountContainer: {
+		paddingHorizontal: 15,
+		paddingTop: 8,
+		backgroundColor: "#fff",
+		borderRadius: 10,
+		marginBottom: 10,
+		borderLeftWidth: 5,
+		borderLeftColor: "#4CAF50",
+	},
 	totalContainer: {
 		flexDirection: "row",
 		justifyContent: "space-between",
 		padding: 15,
+		backgroundColor: "#fff",
+		borderRadius: 10,
+		marginBottom: 10,
+		borderLeftWidth: 5,
+		borderLeftColor: "#4CAF50",
 	},
 	totalLabel: {
 		fontSize: 18,
@@ -111,5 +146,6 @@ const styles = StyleSheet.create({
 	totalValue: {
 		fontSize: 18,
 		fontWeight: "bold",
+		color: "#2E7D32",
 	},
 });
