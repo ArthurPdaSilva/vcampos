@@ -14,6 +14,7 @@ interface BudgetState {
 	updateBudgetItemQuantity: (id: string, quantity: number) => void;
 	updateBudgetItemDescription: (id: string, description: string) => void;
 	removeBudgetItem: (id: string) => void;
+	isGlassAlreadyInBudget: (glassId: string) => boolean;
 }
 
 export const useBudgetStore = create<BudgetState>()(
@@ -47,15 +48,17 @@ export const useBudgetStore = create<BudgetState>()(
 			},
 
 			addBudgetItem: (item) => {
-				set({
-					budgetItems: [
-						...get().budgetItems,
-						{
-							...item,
-							id: `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
-						},
-					],
-				});
+				if (!get().isGlassAlreadyInBudget(item.glassId)) {
+					set({
+						budgetItems: [
+							...get().budgetItems,
+							{
+								...item,
+								id: `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
+							},
+						],
+					});
+				}
 			},
 
 			updateBudgetItemQuantity: (id, quantity) => {
@@ -80,6 +83,10 @@ export const useBudgetStore = create<BudgetState>()(
 				set({
 					budgetItems: get().budgetItems.filter((item) => item.id !== id),
 				});
+			},
+
+			isGlassAlreadyInBudget: (glassId) => {
+				return get().budgetItems.some((item) => item.glassId === glassId);
 			},
 		}),
 		{

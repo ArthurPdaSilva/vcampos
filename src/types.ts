@@ -20,6 +20,7 @@ export type CalculatedGlass = Glass & {
 
 export type BudgetItem = {
 	id: string;
+	glassId: string;
 	description: string;
 	quantity: number;
 	value: number;
