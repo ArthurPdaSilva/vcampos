@@ -10,6 +10,7 @@ import {
 	View,
 } from "react-native";
 import { BudgetListItem } from "../components/BudgetListItem";
+import { EmptyText } from "../components/EmptyText";
 import { FormInput } from "../components/FormInput";
 import { PrimaryButton } from "../components/PrimaryButton";
 import { useBudgetStore } from "../stores/BudgetStore";
@@ -64,9 +65,7 @@ export const BudgetScreen = () => {
 					keyExtractor={(item) => item.id}
 					renderItem={({ item }) => <BudgetListItem item={item} />}
 					ListEmptyComponent={
-						<Text style={styles.emptyText}>
-							Nenhum item no orçamento. Adicione na tela de Cálculo.
-						</Text>
+						<EmptyText text="Nenhum item adicionado ao orçamento. Use a calculadora para adicionar itens." />
 					}
 				/>
 				{budgetItems.length !== 0 && (
@@ -107,12 +106,7 @@ const styles = StyleSheet.create({
 		padding: 12,
 		backgroundColor: "#F5F5F5",
 	},
-	emptyText: {
-		textAlign: "center",
-		color: "#666",
-		marginTop: 40,
-		fontSize: 16,
-	},
+
 	discountContainer: {
 		paddingHorizontal: 15,
 		paddingTop: 8,

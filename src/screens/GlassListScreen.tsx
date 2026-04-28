@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
+import { EmptyText } from "../components/EmptyText";
 import { StockItem } from "../components/StockItem";
 import { UpdateGlass } from "../components/UpdateGlass";
 import { useGlassStore } from "../stores/GlassStore";
@@ -20,6 +21,9 @@ export const GlassListScreen = () => {
 			<FlatList
 				data={glasses}
 				keyExtractor={(item) => item.id}
+				ListEmptyComponent={
+					<EmptyText text="Nenhum item adicionado ao estoque. Use o cadastro para adicionar itens." />
+				}
 				renderItem={({ item }) => (
 					<StockItem
 						setIsUpdateModalVisible={setIsUpdateModalVisible}
