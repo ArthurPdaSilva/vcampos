@@ -10,16 +10,9 @@ type CalculationItemProps = {
 };
 
 export const CalculationItem = ({ res, hideDetails }: CalculationItemProps) => {
-	const { addBudgetItem, isGlassAlreadyInBudget } = useBudgetStore(
-		(state) => state,
-	);
+	const { addBudgetItem } = useBudgetStore((state) => state);
 
 	const handleAddToBudget = () => {
-		if (isGlassAlreadyInBudget(res.id)) {
-			Alert.alert("Aviso", "Este item já foi adicionado ao orçamento!");
-			return;
-		}
-
 		addBudgetItem({
 			glassId: res.id,
 			description: res.name,
