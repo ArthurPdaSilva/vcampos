@@ -61,7 +61,7 @@ export const UpdateGlass = ({ visible, glass, onClose }: UpdateGlassProps) => {
 
 		updateGlass(update);
 		onClose();
-		Alert.alert("Sucesso", "Vidro atualizado!");
+		Alert.alert("Sucesso", "Item atualizado!");
 	};
 
 	const handleInvalidSubmit = (errors: FieldErrors<UpdateGlassFormData>) => {
@@ -85,13 +85,13 @@ export const UpdateGlass = ({ visible, glass, onClose }: UpdateGlassProps) => {
 				<TouchableWithoutFeedback onPress={onClose}>
 					<View style={styles.overlay}>
 						<View style={styles.modalContent}>
-							<Text style={styles.title}>Atualizar vidro</Text>
+							<Text style={styles.title}>Atualizar item</Text>
 							<Controller
 								control={control}
 								name="name"
 								render={({ field: { onChange, value } }) => (
 									<FormInput
-										label="Nome do Vidro"
+										label="Nome"
 										placeholder="Ex: Blindex 8mm"
 										onChangeText={onChange}
 										value={value}

@@ -35,7 +35,7 @@ export const GlassRegistrationScreen = () => {
 
 		addGlass(newGlass);
 		reset({ name: "", price: "" });
-		Alert.alert("Sucesso", "Vidro cadastrado!");
+		Alert.alert("Sucesso", "Item cadastrado!");
 	};
 
 	const handleInvalidSubmit = (
@@ -54,7 +54,7 @@ export const GlassRegistrationScreen = () => {
 				name="name"
 				render={({ field: { onChange, value } }) => (
 					<FormInput
-						label="Nome do Vidro"
+						label="Nome"
 						placeholder="Ex: Blindex 8mm"
 						onChangeText={onChange}
 						value={value}
@@ -78,7 +78,7 @@ export const GlassRegistrationScreen = () => {
 
 			<GlassTypePicker type={type} setType={setType} />
 			<PrimaryButton
-				title="Cadastrar Vidro"
+				title="Cadastrar"
 				onPress={handleSubmit(handleSave, handleInvalidSubmit)}
 			/>
 		</View>

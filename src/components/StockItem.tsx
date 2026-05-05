@@ -19,7 +19,7 @@ export const StockItem = ({
 
 	const handleRemove = (id: string) => {
 		removeGlass(id);
-		Alert.alert("Sucesso", "Vidro removido!");
+		Alert.alert("Sucesso", "Item removido!");
 	};
 
 	const handleOpenUpdate = (glass: Glass) => {
