@@ -18,8 +18,9 @@ import { buildBudgetPdfHtml } from "../utils/buildBudgetPdfHtml";
 import { formatCurrencyBRL } from "../utils/formatCurrencyBRL";
 
 export const BudgetScreen = () => {
-	const { budgetItems, clearBudget, discount, setDiscount, totalValue } =
-		useBudgetStore((state) => state);
+	const { budgetItems, discount, setDiscount, totalValue } = useBudgetStore(
+		(state) => state,
+	);
 
 	const totalWithDiscount = useMemo(() => {
 		const discountValue = Number.parseFloat(discount.replace(",", ".") || "0");
@@ -47,8 +48,6 @@ export const BudgetScreen = () => {
 				dialogTitle: "Baixar/Compartilhar orçamento",
 				UTI: "com.adobe.pdf",
 			});
-
-			clearBudget();
 		} catch {
 			Alert.alert("Erro", "Não foi possível gerar o PDF do orçamento.");
 		}

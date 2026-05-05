@@ -27,7 +27,7 @@ export const useBudgetStore = create<BudgetState>()(
 			},
 
 			clearBudget: () => {
-				set({ budgetItems: [] });
+				set({ budgetItems: [], discount: "", totalValue: 0 });
 			},
 
 			addBudgetItem: (item) => {
