@@ -11,7 +11,7 @@ O app possui 4 abas principais:
 - Cálculo: calcula preço final de vidros com base em altura, largura, tipo e regras de negócio.
 - Cadastro: cadastra novos tipos/modelos de vidro com nome, tipo e preço.
 - Estoque: lista os vidros cadastrados e permite editar ou apagar itens.
-- Orçamento: lista itens adicionados no cálculo, permite ajustes e gera PDF para compartilhamento.
+- Orçamento: permite criar novos orçamentos, salvar histórico de propostas, listar orçamentos salvos e gerar PDF para compartilhamento com o cliente.
 
 ## Funcionalidades
 
@@ -29,10 +29,11 @@ O app possui 4 abas principais:
 - Exibição opcional de detalhes do cálculo (ocultar/mostrar)
 - Adição de itens ao orçamento a partir da tela de Cálculo
 - Gerenciamento do orçamento:
-  - Atualização de quantidade
-  - Atualização de descrição
+  - Atualização de quantidade e descrição dos itens
   - Remoção de itens
-  - Cálculo automático do valor total
+  - Cálculo automático do valor total com descontos
+  - Opção para salvar a proposta (com nome do orçamento, cliente e endereço)
+  - Listagem do histórico de orçamentos salvos (com exclusão e geração de PDF)
 - Geração de orçamento em PDF
 - Compartilhamento do PDF (quando disponível no dispositivo)
 - Validação de formulários com React Hook Form + Zod
@@ -91,11 +92,11 @@ finalPrice = basePrice + expenses + profit
 ```text
 src/
   components/      # Componentes reutilizáveis de UI
+  routes/          # Regras de navegação por Tabs e Stacks
   schemas/         # Schemas Zod para validação dos formulários
-  screens/         # Telas principais (Cálculo, Cadastro, Estoque)
-  stores/          # Estado global e persistência
-  utils/           # Funções utilitárias (ex.: moeda BRL)
-  route.tsx        # Configuração de navegação por abas
+  screens/         # Telas principais da aplicação
+  stores/          # Estado global e persistência (Zustand)
+  utils/           # Funções utilitárias (ex.: moeda BRL, gerador PDF)
   types.ts         # Tipos e constantes de negócio
 ```
 
@@ -164,21 +165,22 @@ O formatador de moeda BRL está em [src/utils/formatCurrencyBRL.ts](src/utils/fo
 2. Informar medidas na aba Cálculo e escolher o tipo.
 3. Visualizar preço final e detalhes (gastos/lucro).
 4. Adicionar itens ao orçamento diretamente a partir do cálculo.
-5. Revisar itens e total na aba Orçamento.
-6. Gerar e compartilhar o PDF do orçamento.
-7. Gerenciar itens cadastrados na aba Estoque (editar ou remover).
+5. Iniciar um **Novo Orçamento** na aba respectiva, podendo ajustar quantidades, adicionar descontos e revisar totais.
+6. Gerar e compartilhar o PDF do orçamento atual ou **Salvá-lo**.
+7. Gerenciar orçamentos passados na **Lista de Orçamentos Salvos**.
+8. Gerenciar itens cadastrados na aba Estoque (editar ou remover).
 
 ## Aba de Orçamento
 
-A aba Orçamento foi criada para consolidar os itens calculados e facilitar o envio de proposta ao cliente.
+A aba Orçamento agora possui uma navegação em formato *Stack*, contendo:
 
 Principais recursos:
 
-- Listagem de itens adicionados no orçamento
-- Edição de quantidade e descrição de cada item
-- Cálculo automático do total geral
-- Geração de PDF em layout de orçamento
-- Compartilhamento do arquivo gerado
+- Menu de opções: "Novo Orçamento" e "Orçamentos Salvos".
+- Listagem dos itens adicionais pendentes no orçamento atual.
+- Salvamento em histórico pedindo dados extras (Cliente e Endereço).
+- Listagem de Orçamentos Salvos, permitindo rever propostas antigas.
+- Geração de PDF e compartilhamento do arquivo gerado para qualquer proposta salva.
 
 O PDF é montado em [src/utils/buildBudgetPdfHtml.ts](src/utils/buildBudgetPdfHtml.ts) e usa dados da empresa via variáveis de ambiente:
 
