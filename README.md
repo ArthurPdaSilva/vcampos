@@ -33,7 +33,7 @@ O app possui 4 abas principais:
   - Remoção de itens
   - Cálculo automático do valor total com descontos
   - Opção para salvar a proposta (com nome do orçamento, cliente e endereço)
-  - Listagem do histórico de orçamentos salvos (com exclusão e geração de PDF)
+  - Listagem do histórico de orçamentos salvos (com exclusão, visualização de detalhes dos itens e geração de PDF)
 - Geração de orçamento em PDF
 - Compartilhamento do PDF (quando disponível no dispositivo)
 - Validação de formulários com React Hook Form + Zod
@@ -177,7 +177,7 @@ Principais recursos:
 - Menu de opções: "Novo Orçamento" e "Orçamentos Salvos".
 - Listagem dos itens adicionais pendentes no orçamento atual.
 - Salvamento em histórico pedindo dados extras (Cliente e Endereço).
-- Listagem de Orçamentos Salvos, permitindo rever propostas antigas.
+- Listagem de Orçamentos Salvos, permitindo rever propostas antigas e visualizar detalhes dos itens salvos.
 - Geração de PDF e compartilhamento do arquivo gerado para qualquer proposta salva.
 
 O PDF é montado em [src/features/budget/utils/buildBudgetPdfHtml.ts](src/features/budget/utils/buildBudgetPdfHtml.ts) e usa dados da empresa via variáveis de ambiente:
