@@ -7,13 +7,12 @@ import {
 	Keyboard,
 	StyleSheet,
 	Text,
-	TouchableOpacity,
 	View,
 } from "react-native";
 import { CalculationItem } from "../components/CalculationItem";
+import { CustomButton } from "../components/CustomButton";
 import { FormInput } from "../components/FormInput";
 import { GlassTypePicker } from "../components/GlassTypePicker";
-import { PrimaryButton } from "../components/PrimaryButton";
 import {
 	type GlassCalculationFormData,
 	glassCalculationSchema,
@@ -21,6 +20,7 @@ import {
 import { useGlassStore } from "../stores/GlassStore";
 import {
 	type CalculatedGlass,
+	type Dimensions,
 	EXPENSES_PERCENTAGE,
 	GLASS_SHEET_SIZE,
 	type GlassType,
@@ -41,10 +41,11 @@ export const GlassCalculationScreen = () => {
 	});
 
 	const calculate = ({ height, width }: GlassCalculationFormData) => {
-		const h = Number.parseFloat(height);
-		const w = Number.parseFloat(width);
-
-		const areaInSquareMeters = (h * w) / 10000;
+		const dimensions: Dimensions = {
+			height: Number.parseFloat(height),
+			width: Number.parseFloat(width),
+		};
+		const areaInSquareMeters = (dimensions.height * dimensions.width) / 10000;
 
 		const calculated: CalculatedGlass[] = [];
 
@@ -69,6 +70,7 @@ export const GlassCalculationScreen = () => {
 				expenses,
 				profit,
 				finalPrice,
+				dimensions,
 			});
 		}
 
@@ -123,19 +125,20 @@ export const GlassCalculationScreen = () => {
 				<GlassTypePicker type={type} setType={setType} />
 			</View>
 
-			<PrimaryButton
+			<CustomButton
 				title="Calcular"
+				style={{ marginTop: 20 }}
 				onPress={handleSubmit(calculate, handleInvalidSubmit)}
 			/>
 
-			<TouchableOpacity
+			<CustomButton
 				style={styles.toggleBtn}
 				onPress={() => setHideDetails(!hideDetails)}
 			>
 				<Text style={{ color: "#fff", fontSize: 16 }}>
 					{hideDetails ? "Mostrar Detalhes" : "Ocultar Detalhes"}
 				</Text>
-			</TouchableOpacity>
+			</CustomButton>
 
 			<FlatList
 				data={results}

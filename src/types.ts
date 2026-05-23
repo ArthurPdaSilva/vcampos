@@ -9,6 +9,11 @@ export type Glass = {
 	price: number;
 };
 
+export type Dimensions = {
+	height: number;
+	width: number;
+};
+
 export type GlassUpdate = Omit<Glass, "type">;
 
 export type CalculatedGlass = Glass & {
@@ -16,6 +21,7 @@ export type CalculatedGlass = Glass & {
 	expenses: number;
 	profit: number;
 	finalPrice: number;
+	dimensions: Dimensions;
 };
 
 export type BudgetItem = {
@@ -25,6 +31,16 @@ export type BudgetItem = {
 	quantity: number;
 	value: number;
 	finalValue: number;
+	dimensions: Dimensions;
+};
+
+export type Budget = {
+	items: BudgetItem[];
+	discount: string;
+	totalValue: number;
+	name: string;
+	clientName: string;
+	address: string;
 };
 
 export const GLASS_SHEET_SIZE = getEnvNumber(

@@ -1,10 +1,11 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import type { BudgetItem } from "../types";
+import type { Budget, BudgetItem } from "../types";
 
 interface BudgetState {
 	budgetItems: BudgetItem[];
+	budgets: Budget[];
 	discount: string;
 	totalValue: number;
 	setDiscount: (value: string) => void;
@@ -13,12 +14,14 @@ interface BudgetState {
 	updateBudgetItemQuantity: (id: string, quantity: number) => void;
 	updateBudgetItemDescription: (id: string, description: string) => void;
 	removeBudgetItem: (id: string) => void;
+	saveBudget: (budget: Budget) => void;
 }
 
 export const useBudgetStore = create<BudgetState>()(
 	persist(
 		(set, get) => ({
 			budgetItems: [],
+			budgets: [],
 			discount: "",
 			totalValue: 0,
 
@@ -76,6 +79,12 @@ export const useBudgetStore = create<BudgetState>()(
 						}
 						return total + item.finalValue;
 					}, 0),
+				});
+			},
+
+			saveBudget: (budget) => {
+				set({
+					budgets: [...get().budgets, budget],
 				});
 			},
 		}),

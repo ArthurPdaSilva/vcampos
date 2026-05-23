@@ -2,9 +2,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { Controller, type FieldErrors, useForm } from "react-hook-form";
 import { Alert, Keyboard, StyleSheet, View } from "react-native";
+import { CustomButton } from "../components/CustomButton";
 import { FormInput } from "../components/FormInput";
 import { GlassTypePicker } from "../components/GlassTypePicker";
-import { PrimaryButton } from "../components/PrimaryButton";
 import {
 	type GlassRegistrationFormData,
 	glassRegistrationSchema,
@@ -77,8 +77,9 @@ export const GlassRegistrationScreen = () => {
 			/>
 
 			<GlassTypePicker type={type} setType={setType} />
-			<PrimaryButton
+			<CustomButton
 				title="Cadastrar"
+				style={{ marginTop: 20 }}
 				onPress={handleSubmit(handleSave, handleInvalidSubmit)}
 			/>
 		</View>

@@ -1,8 +1,10 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Alert, StyleSheet, Text, View } from "react-native";
 import { useBudgetStore } from "../stores/BudgetStore";
 import type { CalculatedGlass } from "../types";
 import { formatCurrencyBRL } from "../utils/formatCurrencyBRL";
+
+import { CustomButton } from "./CustomButton";
 
 type CalculationItemProps = {
 	res: CalculatedGlass;
@@ -19,6 +21,7 @@ export const CalculationItem = ({ res, hideDetails }: CalculationItemProps) => {
 			value: res.finalPrice,
 			finalValue: res.finalPrice,
 			quantity: 1,
+			dimensions: res.dimensions,
 		});
 		Alert.alert("Sucesso", "Item adicionado ao orçamento!");
 	};
@@ -27,13 +30,13 @@ export const CalculationItem = ({ res, hideDetails }: CalculationItemProps) => {
 		<View key={res.id} style={styles.resultCard}>
 			<View style={styles.header}>
 				<Text style={styles.title}>{res.name}</Text>
-				<TouchableOpacity
+				<CustomButton
 					onPress={handleAddToBudget}
 					style={styles.addButton}
 					accessibilityLabel="Adicionar ao orçamento"
 				>
 					<MaterialIcons name="add-circle" size={24} color="#2E7D32" />
-				</TouchableOpacity>
+				</CustomButton>
 			</View>
 
 			{!hideDetails && res.type !== "Outro" && (
@@ -53,11 +56,19 @@ export const CalculationItem = ({ res, hideDetails }: CalculationItemProps) => {
 			<Text style={styles.finalPrice}>
 				Preço Final: {formatCurrencyBRL(res.finalPrice)}
 			</Text>
+			<Text style={styles.dimensionsText}>
+				Dimensões: {res.dimensions.width}cm x {res.dimensions.height}cm
+			</Text>
 		</View>
 	);
 };
 
 const styles = StyleSheet.create({
+	dimensionsText: {
+		color: "#666",
+		fontSize: 12,
+		marginTop: 5,
+	},
 	resultCard: {
 		backgroundColor: "#fff",
 		padding: 15,

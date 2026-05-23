@@ -1,8 +1,5 @@
-import * as Print from "expo-print";
-import * as Sharing from "expo-sharing";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import {
-	Alert,
 	FlatList,
 	KeyboardAvoidingView,
 	StyleSheet,
@@ -10,14 +7,16 @@ import {
 	View,
 } from "react-native";
 import { BudgetListItem } from "../components/BudgetListItem";
+import { CustomButton } from "../components/CustomButton";
 import { EmptyText } from "../components/EmptyText";
 import { FormInput } from "../components/FormInput";
-import { PrimaryButton } from "../components/PrimaryButton";
+import { SaveBudget } from "../components/SaveBudget";
 import { useBudgetStore } from "../stores/BudgetStore";
-import { buildBudgetPdfHtml } from "../utils/buildBudgetPdfHtml";
 import { formatCurrencyBRL } from "../utils/formatCurrencyBRL";
+import { handleGenerateBudgetPdf } from "../utils/handleGenerateBudgetPdf";
 
 export const BudgetScreen = () => {
+	const [saveModalVisible, setSaveModalVisible] = useState(false);
 	const { budgetItems, discount, setDiscount, totalValue } = useBudgetStore(
 		(state) => state,
 	);
@@ -26,32 +25,6 @@ export const BudgetScreen = () => {
 		const discountValue = Number.parseFloat(discount.replace(",", ".") || "0");
 		return totalValue - discountValue;
 	}, [discount, totalValue]);
-
-	const handleGenerateBudgetPdf = async () => {
-		if (budgetItems.length === 0) {
-			Alert.alert("Orçamento vazio", "Adicione itens antes de gerar o PDF.");
-			return;
-		}
-
-		try {
-			const html = buildBudgetPdfHtml({ budgetItems, discount, totalValue });
-			const { uri } = await Print.printToFileAsync({ html });
-
-			const canShare = await Sharing.isAvailableAsync();
-			if (!canShare) {
-				Alert.alert("PDF gerado", `Arquivo salvo em: ${uri}`);
-				return;
-			}
-
-			await Sharing.shareAsync(uri, {
-				mimeType: "application/pdf",
-				dialogTitle: "Baixar/Compartilhar orçamento",
-				UTI: "com.adobe.pdf",
-			});
-		} catch {
-			Alert.alert("Erro", "Não foi possível gerar o PDF do orçamento.");
-		}
-	};
 
 	return (
 		<KeyboardAvoidingView
@@ -87,11 +60,27 @@ export const BudgetScreen = () => {
 					</>
 				)}
 
-				<PrimaryButton
+				<CustomButton
 					title="Gerar Orçamento"
-					onPress={handleGenerateBudgetPdf}
+					style={{ marginTop: 10 }}
+					onPress={() =>
+						handleGenerateBudgetPdf({
+							budgetItems,
+							discount,
+							totalValue: totalWithDiscount,
+						})
+					}
+				/>
+				<CustomButton
+					title="Salvar Orçamento"
+					style={{ marginTop: 10, backgroundColor: "#4CAF50" }}
+					onPress={() => setSaveModalVisible(true)}
 				/>
 			</View>
+			<SaveBudget
+				visible={saveModalVisible}
+				onClose={() => setSaveModalVisible(false)}
+			/>
 		</KeyboardAvoidingView>
 	);
 };

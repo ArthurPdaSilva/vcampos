@@ -8,7 +8,6 @@ import {
 	Modal,
 	StyleSheet,
 	Text,
-	TouchableOpacity,
 	TouchableWithoutFeedback,
 	View,
 } from "react-native";
@@ -18,6 +17,7 @@ import {
 } from "../schemas/updateGlassSchema";
 import { useGlassStore } from "../stores/GlassStore";
 import type { Glass, GlassUpdate } from "../types";
+import { CustomButton } from "./CustomButton";
 import { FormInput } from "./FormInput";
 
 type UpdateGlassProps = {
@@ -114,15 +114,15 @@ export const UpdateGlass = ({ visible, glass, onClose }: UpdateGlassProps) => {
 							/>
 
 							<View style={styles.actions}>
-								<TouchableOpacity style={styles.cancelButton} onPress={onClose}>
+								<CustomButton style={styles.cancelButton} onPress={onClose}>
 									<Text style={styles.buttonText}>Cancelar</Text>
-								</TouchableOpacity>
-								<TouchableOpacity
+								</CustomButton>
+								<CustomButton
 									style={styles.saveButton}
 									onPress={handleSubmit(handleUpdateGlass, handleInvalidSubmit)}
 								>
 									<Text style={styles.buttonText}>Salvar</Text>
-								</TouchableOpacity>
+								</CustomButton>
 							</View>
 						</View>
 					</View>

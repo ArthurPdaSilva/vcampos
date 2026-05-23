@@ -1,14 +1,10 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import {
-	StyleSheet,
-	Text,
-	TextInput,
-	TouchableOpacity,
-	View,
-} from "react-native";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 import { useBudgetStore } from "../stores/BudgetStore";
 import type { BudgetItem } from "../types";
 import { formatCurrencyBRL } from "../utils/formatCurrencyBRL";
+
+import { CustomButton } from "./CustomButton";
 
 export const BudgetListItem = ({ item }: { item: BudgetItem }) => {
 	const {
@@ -21,9 +17,9 @@ export const BudgetListItem = ({ item }: { item: BudgetItem }) => {
 		<View style={styles.card}>
 			<View style={styles.topRow}>
 				<Text style={styles.label}>Descrição</Text>
-				<TouchableOpacity onPress={() => removeBudgetItem(item.id)}>
+				<CustomButton onPress={() => removeBudgetItem(item.id)}>
 					<MaterialIcons name="delete" size={20} color="#F44336" />
-				</TouchableOpacity>
+				</CustomButton>
 			</View>
 
 			<TextInput
@@ -57,11 +53,21 @@ export const BudgetListItem = ({ item }: { item: BudgetItem }) => {
 					</Text>
 				</View>
 			</View>
+			{item.dimensions && (
+				<Text style={styles.dimensionsText}>
+					Dimensões: {item.dimensions.width}cm x {item.dimensions.height}cm
+				</Text>
+			)}
 		</View>
 	);
 };
 
 const styles = StyleSheet.create({
+	dimensionsText: {
+		color: "#666",
+		fontSize: 12,
+		marginTop: 8,
+	},
 	card: {
 		backgroundColor: "#fff",
 		borderRadius: 10,
