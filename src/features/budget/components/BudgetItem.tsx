@@ -1,13 +1,16 @@
 import { MaterialIcons } from "@expo/vector-icons";
+import { useState } from "react";
 import { Alert, StyleSheet, Text, View } from "react-native";
 import { CustomButton } from "../../../components/CustomButton";
 import type { Budget } from "../../../types";
 import { formatCurrencyBRL } from "../../../utils/formatCurrencyBRL";
 import { useBudgetStore } from "../stores/BudgetStore";
 import { handleGenerateBudgetPdf } from "../utils/handleGenerateBudgetPdf";
+import { BudgetInfo } from "./BudgetInfo";
 
 export const BudgetItem = ({ item }: { item: Budget }) => {
 	const { deleteBudget } = useBudgetStore((state) => state);
+	const [modalVisible, setModalVisible] = useState(false);
 
 	const handleDelete = () => {
 		deleteBudget(item.id);
@@ -31,6 +34,12 @@ export const BudgetItem = ({ item }: { item: Budget }) => {
 			</View>
 			<View style={styles.actions}>
 				<CustomButton
+					onPress={() => setModalVisible(true)}
+					style={styles.actionButton}
+				>
+					<MaterialIcons name="visibility" size={24} color="#FF9800" />
+				</CustomButton>
+				<CustomButton
 					onPress={() =>
 						handleGenerateBudgetPdf({
 							budgetItems: item.items,
@@ -46,6 +55,12 @@ export const BudgetItem = ({ item }: { item: Budget }) => {
 					<MaterialIcons name="delete" size={24} color="#F44336" />
 				</CustomButton>
 			</View>
+
+			<BudgetInfo
+				visible={modalVisible}
+				item={item}
+				onClose={() => setModalVisible(false)}
+			/>
 		</View>
 	);
 };
