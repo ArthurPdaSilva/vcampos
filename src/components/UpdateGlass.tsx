@@ -114,9 +114,12 @@ export const UpdateGlass = ({ visible, glass, onClose }: UpdateGlassProps) => {
 							/>
 
 							<View style={styles.actions}>
-								<CustomButton style={styles.cancelButton} onPress={onClose}>
-									<Text style={styles.buttonText}>Cancelar</Text>
-								</CustomButton>
+								<CustomButton
+									style={styles.cancelButton}
+									onPress={onClose}
+									title="Cancelar"
+									textStyle={styles.buttonText}
+								/>
 								<CustomButton
 									style={styles.saveButton}
 									onPress={handleSubmit(handleUpdateGlass, handleInvalidSubmit)}

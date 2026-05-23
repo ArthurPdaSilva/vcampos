@@ -1,14 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { Controller, type FieldErrors, useForm } from "react-hook-form";
-import {
-	Alert,
-	FlatList,
-	Keyboard,
-	StyleSheet,
-	Text,
-	View,
-} from "react-native";
+import { Alert, FlatList, Keyboard, StyleSheet, View } from "react-native";
 import { CalculationItem } from "../components/CalculationItem";
 import { CustomButton } from "../components/CustomButton";
 import { FormInput } from "../components/FormInput";
@@ -134,11 +127,9 @@ export const GlassCalculationScreen = () => {
 			<CustomButton
 				style={styles.toggleBtn}
 				onPress={() => setHideDetails(!hideDetails)}
-			>
-				<Text style={{ color: "#fff", fontSize: 16 }}>
-					{hideDetails ? "Mostrar Detalhes" : "Ocultar Detalhes"}
-				</Text>
-			</CustomButton>
+				title={hideDetails ? "Mostrar Detalhes" : "Ocultar Detalhes"}
+				textStyle={{ color: "#fff", fontSize: 16 }}
+			/>
 
 			<FlatList
 				data={results}

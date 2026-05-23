@@ -4,7 +4,7 @@ import { Alert } from "react-native";
 import type { BudgetItem } from "../types";
 import { buildBudgetPdfHtml } from "./buildBudgetPdfHtml";
 
-type HandleGenerateBudgetPdfParams = {
+type HandleGenerateBudgetPdfProps = {
 	budgetItems: BudgetItem[];
 	discount: string;
 	totalValue: number;
@@ -14,7 +14,7 @@ export const handleGenerateBudgetPdf = async ({
 	budgetItems,
 	discount,
 	totalValue,
-}: HandleGenerateBudgetPdfParams) => {
+}: HandleGenerateBudgetPdfProps) => {
 	if (budgetItems.length === 0) {
 		Alert.alert("Orçamento vazio", "Adicione itens antes de gerar o PDF.");
 		return;
