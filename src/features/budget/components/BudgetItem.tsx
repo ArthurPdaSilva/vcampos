@@ -1,9 +1,9 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { Alert, StyleSheet, Text, View } from "react-native";
-import { CustomButton } from "../components/CustomButton";
+import { CustomButton } from "../../../components/CustomButton";
+import type { Budget } from "../../../types";
+import { formatCurrencyBRL } from "../../../utils/formatCurrencyBRL";
 import { useBudgetStore } from "../stores/BudgetStore";
-import type { Budget } from "../types";
-import { formatCurrencyBRL } from "../utils/formatCurrencyBRL";
 import { handleGenerateBudgetPdf } from "../utils/handleGenerateBudgetPdf";
 
 export const BudgetItem = ({ item }: { item: Budget }) => {

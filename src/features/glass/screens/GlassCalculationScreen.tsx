@@ -2,15 +2,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { Controller, type FieldErrors, useForm } from "react-hook-form";
 import { Alert, FlatList, Keyboard, StyleSheet, View } from "react-native";
-import { CalculationItem } from "../components/CalculationItem";
-import { CustomButton } from "../components/CustomButton";
-import { FormInput } from "../components/FormInput";
-import { GlassTypePicker } from "../components/GlassTypePicker";
-import {
-	type GlassCalculationFormData,
-	glassCalculationSchema,
-} from "../schemas/glassCalculationSchema";
-import { useGlassStore } from "../stores/GlassStore";
+import { CustomButton } from "../../../components/CustomButton";
+import { FormInput } from "../../../components/FormInput";
 import {
 	type CalculatedGlass,
 	type Dimensions,
@@ -18,7 +11,14 @@ import {
 	GLASS_SHEET_SIZE,
 	type GlassType,
 	PROFIT_PERCENTAGE,
-} from "../types";
+} from "../../../types";
+import { CalculationItem } from "../components/CalculationItem";
+import { GlassTypePicker } from "../components/GlassTypePicker";
+import {
+	type GlassCalculationFormData,
+	glassCalculationSchema,
+} from "../schemas/glassCalculationSchema";
+import { useGlassStore } from "../stores/GlassStore";
 
 export const GlassCalculationScreen = () => {
 	const [type, setType] = useState<GlassType>("Temperado");
@@ -68,10 +68,7 @@ export const GlassCalculationScreen = () => {
 		}
 
 		if (calculated.length === 0) {
-			return Alert.alert(
-				"Aviso",
-				"Nenhum vidro encontrado para o tipo selecionado",
-			);
+			Alert.alert("Aviso", "Nenhum vidro encontrado para o tipo selecionado");
 		}
 
 		setResults(calculated);

@@ -1,7 +1,11 @@
 import { z } from "zod";
 
 export const glassRegistrationSchema = z.object({
-	name: z.string().trim().min(1, "Preencha todos os campos"),
+	name: z
+		.string()
+		.trim()
+		.min(1, "Preencha todos os campos")
+		.max(50, "O nome deve conter no máximo 50 caracteres"),
 	price: z
 		.string()
 		.trim()

@@ -12,13 +12,13 @@ import {
 	TouchableWithoutFeedback,
 	View,
 } from "react-native";
+import { CustomButton } from "../../../components/CustomButton";
+import { FormInput } from "../../../components/FormInput";
 import {
 	type SaveBudgetFormData,
 	saveBudgetSchema,
 } from "../schemas/saveBudgetSchema";
 import { useBudgetStore } from "../stores/BudgetStore";
-import { CustomButton } from "./CustomButton";
-import { FormInput } from "./FormInput";
 
 type SaveBudgetProps = {
 	visible: boolean;

@@ -1,8 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StyleSheet, Text, View } from "react-native";
-import { CustomButton } from "../components/CustomButton";
-import type { BudgetStackParamList } from "../routes/BudgetStack";
+import { CustomButton } from "../../../components/CustomButton";
+import type { BudgetStackParamList } from "../../../routes/BudgetStack";
 
 export const BudgetIndexScreen = () => {
 	const navigation =

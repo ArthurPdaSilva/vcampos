@@ -1,9 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import type { Glass, GlassUpdate } from "../types";
+import type { Glass, GlassUpdate } from "../../../types";
 
-// Definição da interface do Store
 interface GlassState {
 	glasses: Glass[];
 	addGlass: (glass: Glass) => void;

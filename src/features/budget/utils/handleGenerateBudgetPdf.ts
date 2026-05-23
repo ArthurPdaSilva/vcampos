@@ -1,7 +1,7 @@
 import * as Print from "expo-print";
 import * as Sharing from "expo-sharing";
 import { Alert } from "react-native";
-import type { BudgetItem } from "../types";
+import type { BudgetItem } from "../../../types";
 import { buildBudgetPdfHtml } from "./buildBudgetPdfHtml";
 
 type HandleGenerateBudgetPdfProps = {

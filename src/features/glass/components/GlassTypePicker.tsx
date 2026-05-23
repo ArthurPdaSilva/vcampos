@@ -1,7 +1,7 @@
 import { Picker } from "@react-native-picker/picker";
 import { StyleSheet, View } from "react-native";
-import type { GlassType } from "../types";
-import { Label } from "./Label";
+import { Label } from "../../../components/Label";
+import type { GlassType } from "../../../types";
 
 type GlassTypePickerProps = {
 	type: GlassType;

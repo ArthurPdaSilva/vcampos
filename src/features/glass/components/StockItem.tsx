@@ -1,8 +1,8 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import type { Glass } from "../../../types";
+import { formatCurrencyBRL } from "../../../utils/formatCurrencyBRL";
 import { useGlassStore } from "../stores/GlassStore";
-import type { Glass } from "../types";
-import { formatCurrencyBRL } from "../utils/formatCurrencyBRL";
 
 type StockItemProps = {
 	setSelectedGlass: (glass: Glass) => void;

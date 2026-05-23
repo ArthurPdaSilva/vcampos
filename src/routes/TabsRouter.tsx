@@ -1,8 +1,8 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { GlassCalculationScreen } from "../screens/GlassCalculationScreen";
-import { GlassListScreen } from "../screens/GlassListScreen";
-import { GlassRegistrationScreen } from "../screens/GlassRegistrationScreen";
+import { GlassCalculationScreen } from "../features/glass/screens/GlassCalculationScreen";
+import { GlassListScreen } from "../features/glass/screens/GlassListScreen";
+import { GlassRegistrationScreen } from "../features/glass/screens/GlassRegistrationScreen";
 import { BudgetStack } from "./BudgetStack";
 
 const Tab = createBottomTabNavigator();

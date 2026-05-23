@@ -1,6 +1,6 @@
 import { FlatList, StyleSheet, View } from "react-native";
+import { EmptyText } from "../../../components/EmptyText";
 import { BudgetItem } from "../components/BudgetItem";
-import { EmptyText } from "../components/EmptyText";
 import { useBudgetStore } from "../stores/BudgetStore";
 
 export const BudgetListScreen = () => {

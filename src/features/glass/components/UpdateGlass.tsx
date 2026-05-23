@@ -11,14 +11,14 @@ import {
 	TouchableWithoutFeedback,
 	View,
 } from "react-native";
+import { CustomButton } from "../../../components/CustomButton";
+import { FormInput } from "../../../components/FormInput";
+import type { Glass, GlassUpdate } from "../../../types";
 import {
 	type UpdateGlassFormData,
 	updateGlassSchema,
 } from "../schemas/updateGlassSchema";
 import { useGlassStore } from "../stores/GlassStore";
-import type { Glass, GlassUpdate } from "../types";
-import { CustomButton } from "./CustomButton";
-import { FormInput } from "./FormInput";
 
 type UpdateGlassProps = {
 	visible: boolean;

@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import type { Budget, BudgetItem } from "../types";
+import type { Budget, BudgetItem } from "../../../types";
 
 interface BudgetState {
 	budgetItems: BudgetItem[];

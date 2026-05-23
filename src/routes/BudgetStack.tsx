@@ -1,10 +1,10 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { TouchableOpacity } from "react-native";
-import { BudgetCreateScreen } from "../screens/BudgetCreateScreen";
-import { BudgetIndexScreen } from "../screens/BudgetIndexScreen";
-import { BudgetListScreen } from "../screens/BudgetListScreen";
-import { useBudgetStore } from "../stores/BudgetStore";
+import { BudgetCreateScreen } from "../features/budget/screens/BudgetCreateScreen";
+import { BudgetIndexScreen } from "../features/budget/screens/BudgetIndexScreen";
+import { BudgetListScreen } from "../features/budget/screens/BudgetListScreen";
+import { useBudgetStore } from "../features/budget/stores/BudgetStore";
 
 export type BudgetStackParamList = {
 	BudgetIndex: undefined;

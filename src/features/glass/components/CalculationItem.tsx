@@ -1,10 +1,9 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { Alert, StyleSheet, Text, View } from "react-native";
-import { useBudgetStore } from "../stores/BudgetStore";
-import type { CalculatedGlass } from "../types";
-import { formatCurrencyBRL } from "../utils/formatCurrencyBRL";
-
-import { CustomButton } from "./CustomButton";
+import { CustomButton } from "../../../components/CustomButton";
+import type { CalculatedGlass } from "../../../types";
+import { formatCurrencyBRL } from "../../../utils/formatCurrencyBRL";
+import { useBudgetStore } from "../../budget/stores/BudgetStore";
 
 type CalculationItemProps = {
 	res: CalculatedGlass;

@@ -2,15 +2,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { Controller, type FieldErrors, useForm } from "react-hook-form";
 import { Alert, Keyboard, StyleSheet, View } from "react-native";
-import { CustomButton } from "../components/CustomButton";
-import { FormInput } from "../components/FormInput";
+import { CustomButton } from "../../../components/CustomButton";
+import { FormInput } from "../../../components/FormInput";
+import type { GlassType } from "../../../types";
 import { GlassTypePicker } from "../components/GlassTypePicker";
 import {
 	type GlassRegistrationFormData,
 	glassRegistrationSchema,
 } from "../schemas/glassRegistrationSchema";
 import { useGlassStore } from "../stores/GlassStore";
-import type { GlassType } from "../types";
 
 export const GlassRegistrationScreen = () => {
 	const [type, setType] = useState<GlassType>("Temperado");

@@ -91,12 +91,10 @@ finalPrice = basePrice + expenses + profit
 
 ```text
 src/
-  components/      # Componentes reutilizáveis de UI
+  components/      # Componentes principais reutilizáveis de UI
+  features/        # Funcionalidades principais divididas por domínio (budget, glass)
   routes/          # Regras de navegação por Tabs e Stacks
-  schemas/         # Schemas Zod para validação dos formulários
-  screens/         # Telas principais da aplicação
-  stores/          # Estado global e persistência (Zustand)
-  utils/           # Funções utilitárias (ex.: moeda BRL, gerador PDF)
+  utils/           # Funções utilitárias de uso global (ex.: formatação de moeda)
   types.ts         # Tipos e constantes de negócio
 ```
 
@@ -147,11 +145,11 @@ Os scripts estão definidos em [package.json](package.json):
 
 ## Persistência de Dados
 
-A persistência é feita com Zustand + AsyncStorage em [src/stores/GlassStore.ts](src/stores/GlassStore.ts), usando a chave:
+A persistência é feita com Zustand + AsyncStorage em [src/features/glass/stores/GlassStore.ts](src/features/glass/stores/GlassStore.ts), usando a chave:
 
 - `glass-storage`
 
-Para os dados de orçamento, a persistência é feita em [src/stores/BudgetStore.ts](src/stores/BudgetStore.ts), usando a chave:
+Para os dados de orçamento, a persistência é feita em [src/features/budget/stores/BudgetStore.ts](src/features/budget/stores/BudgetStore.ts), usando a chave:
 
 - `budget-storage`
 
@@ -182,7 +180,7 @@ Principais recursos:
 - Listagem de Orçamentos Salvos, permitindo rever propostas antigas.
 - Geração de PDF e compartilhamento do arquivo gerado para qualquer proposta salva.
 
-O PDF é montado em [src/utils/buildBudgetPdfHtml.ts](src/utils/buildBudgetPdfHtml.ts) e usa dados da empresa via variáveis de ambiente:
+O PDF é montado em [src/features/budget/utils/buildBudgetPdfHtml.ts](src/features/budget/utils/buildBudgetPdfHtml.ts) e usa dados da empresa via variáveis de ambiente:
 
 - `EXPO_PUBLIC_COMPANY_ADDRESS`
 - `EXPO_PUBLIC_COMPANY_CNPJ`

@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
-import { EmptyText } from "../components/EmptyText";
+import { EmptyText } from "../../../components/EmptyText";
+import type { Glass } from "../../../types";
 import { StockItem } from "../components/StockItem";
 import { UpdateGlass } from "../components/UpdateGlass";
 import { useGlassStore } from "../stores/GlassStore";
-import type { Glass } from "../types";
 
 export const GlassListScreen = () => {
 	const { glasses } = useGlassStore((state) => state);
