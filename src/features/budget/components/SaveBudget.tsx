@@ -6,7 +6,6 @@ import {
 	Keyboard,
 	KeyboardAvoidingView,
 	Modal,
-	Platform,
 	StyleSheet,
 	Text,
 	TouchableWithoutFeedback,
@@ -82,7 +81,7 @@ export const SaveBudget = ({ visible, onClose }: SaveBudgetProps) => {
 		>
 			<KeyboardAvoidingView
 				style={styles.keyboardAvoidingContainer}
-				behavior={Platform.OS === "ios" ? "padding" : undefined}
+				behavior="padding"
 			>
 				<TouchableWithoutFeedback onPress={onClose}>
 					<View style={styles.overlay}>

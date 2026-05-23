@@ -80,7 +80,7 @@ export const UpdateGlass = ({ visible, glass, onClose }: UpdateGlassProps) => {
 		>
 			<KeyboardAvoidingView
 				style={styles.keyboardAvoidingContainer}
-				behavior={"padding"}
+				behavior="padding"
 			>
 				<TouchableWithoutFeedback onPress={onClose}>
 					<View style={styles.overlay}>
