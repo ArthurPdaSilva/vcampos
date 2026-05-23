@@ -79,7 +79,7 @@ export const GlassRegistrationScreen = () => {
 			<GlassTypePicker type={type} setType={setType} />
 			<CustomButton
 				title="Cadastrar"
-				style={{ marginTop: 20 }}
+				style={{ marginTop: 20, backgroundColor: "#4CAF50" }}
 				onPress={handleSubmit(handleSave, handleInvalidSubmit)}
 			/>
 		</View>

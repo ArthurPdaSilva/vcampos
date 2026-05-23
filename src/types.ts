@@ -35,6 +35,7 @@ export type BudgetItem = {
 };
 
 export type Budget = {
+	id: string;
 	items: BudgetItem[];
 	discount: string;
 	totalValue: number;

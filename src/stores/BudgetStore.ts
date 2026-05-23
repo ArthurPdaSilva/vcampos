@@ -14,7 +14,8 @@ interface BudgetState {
 	updateBudgetItemQuantity: (id: string, quantity: number) => void;
 	updateBudgetItemDescription: (id: string, description: string) => void;
 	removeBudgetItem: (id: string) => void;
-	saveBudget: (budget: Budget) => void;
+	saveBudget: (budget: Omit<Budget, "id">) => void;
+	deleteBudget: (id: string) => void;
 }
 
 export const useBudgetStore = create<BudgetState>()(
@@ -84,7 +85,18 @@ export const useBudgetStore = create<BudgetState>()(
 
 			saveBudget: (budget) => {
 				set({
-					budgets: [...get().budgets, budget],
+					budgets: [
+						...get().budgets,
+						{
+							...budget,
+							id: `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
+						},
+					],
+				});
+			},
+			deleteBudget: (id) => {
+				set({
+					budgets: get().budgets.filter((budget) => budget.id !== id),
 				});
 			},
 		}),

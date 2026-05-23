@@ -15,7 +15,7 @@ import { useBudgetStore } from "../stores/BudgetStore";
 import { formatCurrencyBRL } from "../utils/formatCurrencyBRL";
 import { handleGenerateBudgetPdf } from "../utils/handleGenerateBudgetPdf";
 
-export const BudgetScreen = () => {
+export const BudgetCreateScreen = () => {
 	const [saveModalVisible, setSaveModalVisible] = useState(false);
 	const { budgetItems, discount, setDiscount, totalValue } = useBudgetStore(
 		(state) => state,
