@@ -44,7 +44,7 @@ export const BudgetItem = ({ item }: { item: Budget }) => {
 						handleGenerateBudgetPdf({
 							budgetItems: item.items,
 							discount: item.discount,
-							totalValue: totalWithDiscount,
+							totalValue: item.totalValue,
 						})
 					}
 					style={styles.actionButton}

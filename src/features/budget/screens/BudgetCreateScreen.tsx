@@ -67,7 +67,7 @@ export const BudgetCreateScreen = () => {
 						handleGenerateBudgetPdf({
 							budgetItems,
 							discount,
-							totalValue: totalWithDiscount,
+							totalValue,
 						})
 					}
 				/>
