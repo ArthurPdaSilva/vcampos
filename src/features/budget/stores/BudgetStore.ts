@@ -12,11 +12,13 @@ interface BudgetState {
 	setDescription: (value: string) => void;
 	setDiscount: (value: string) => void;
 	clearBudget: () => void;
+	loadBudget: (budget: Budget) => void;
 	addBudgetItem: (item: Omit<BudgetItem, "id">) => void;
 	updateBudgetItemQuantity: (id: string, quantity: number) => void;
 	updateBudgetItemDescription: (id: string, description: string) => void;
 	removeBudgetItem: (id: string) => void;
 	saveBudget: (budget: Omit<Budget, "id">) => void;
+	updateBudget: (budget: Budget) => void;
 	deleteBudget: (id: string) => void;
 }
 
@@ -38,7 +40,16 @@ export const useBudgetStore = create<BudgetState>()(
 			},
 
 			clearBudget: () => {
-				set({ budgetItems: [], discount: "", totalValue: 0 });
+				set({ budgetItems: [], discount: "", totalValue: 0, description: "" });
+			},
+
+			loadBudget: (budget) => {
+				set({
+					budgetItems: budget.items,
+					discount: budget.discount,
+					totalValue: budget.totalValue,
+					description: budget.description,
+				});
 			},
 
 			addBudgetItem: (item) => {
@@ -99,6 +110,14 @@ export const useBudgetStore = create<BudgetState>()(
 							id: `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
 						},
 					],
+				});
+			},
+
+			updateBudget: (budget) => {
+				set({
+					budgets: get().budgets.map((currentBudget) =>
+						currentBudget.id === budget.id ? budget : currentBudget,
+					),
 				});
 			},
 			deleteBudget: (id) => {

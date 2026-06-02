@@ -1,7 +1,10 @@
 import { MaterialIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useState } from "react";
 import { Alert, StyleSheet, Text, View } from "react-native";
 import { CustomButton } from "../../../components/CustomButton";
+import type { BudgetStackParamList } from "../../../routes/BudgetStack";
 import type { Budget } from "../../../types";
 import { formatCurrencyBRL } from "../../../utils/formatCurrencyBRL";
 import { useBudgetStore } from "../stores/BudgetStore";
@@ -10,6 +13,8 @@ import { BudgetInfo } from "./BudgetInfo";
 
 export const BudgetItem = ({ item }: { item: Budget }) => {
 	const { deleteBudget } = useBudgetStore((state) => state);
+	const navigation =
+		useNavigation<NativeStackNavigationProp<BudgetStackParamList>>();
 	const [modalVisible, setModalVisible] = useState(false);
 
 	const handleDelete = () => {
@@ -33,6 +38,12 @@ export const BudgetItem = ({ item }: { item: Budget }) => {
 				</Text>
 			</View>
 			<View style={styles.actions}>
+				<CustomButton
+					onPress={() => navigation.navigate("BudgetEdit", { id: item.id })}
+					style={styles.actionButton}
+				>
+					<MaterialIcons name="edit" size={24} color="#2196F3" />
+				</CustomButton>
 				<CustomButton
 					onPress={() => setModalVisible(true)}
 					style={styles.actionButton}

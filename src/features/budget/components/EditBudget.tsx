@@ -13,56 +13,63 @@ import {
 } from "react-native";
 import { CustomButton } from "../../../components/CustomButton";
 import { FormInput } from "../../../components/FormInput";
+import type { Budget } from "../../../types";
 import {
-	type SaveBudgetFormData,
-	saveBudgetSchema,
-} from "../schemas/saveBudgetSchema";
+	type EditBudgetFormData,
+	editBudgetSchema,
+} from "../schemas/editBudgetSchema";
 import { useBudgetStore } from "../stores/BudgetStore";
 
-type SaveBudgetProps = {
+type EditBudgetProps = {
 	visible: boolean;
 	onClose: () => void;
+	budget: Budget;
 };
 
-export const SaveBudget = ({ visible, onClose }: SaveBudgetProps) => {
-	const { saveBudget, description, budgetItems, discount, totalValue } =
+export const EditBudget = ({ visible, onClose, budget }: EditBudgetProps) => {
+	const { updateBudget, budgetItems, discount, totalValue, description } =
 		useBudgetStore((state) => state);
-	const { control, handleSubmit, reset } = useForm<SaveBudgetFormData>({
-		resolver: zodResolver(saveBudgetSchema),
+	const { control, handleSubmit, reset } = useForm<EditBudgetFormData>({
+		resolver: zodResolver(editBudgetSchema),
 		defaultValues: {
-			name: "",
-			clientName: "",
-			address: "",
+			name: budget.name,
+			clientName: budget.clientName,
+			address: budget.address,
 		},
 	});
 
 	useEffect(() => {
-		if (visible) {
-			reset({ name: "", clientName: "", address: "" });
-		}
-	}, [reset, visible]);
+		if (!visible) return;
 
-	const handleSaveBudget = ({
+		reset({
+			name: budget.name,
+			clientName: budget.clientName,
+			address: budget.address,
+		});
+	}, [budget.address, budget.clientName, budget.name, reset, visible]);
+
+	const handleEditBudget = ({
 		name,
 		clientName,
 		address,
-	}: SaveBudgetFormData) => {
+	}: EditBudgetFormData) => {
 		Keyboard.dismiss();
 
-		saveBudget({
-			items: budgetItems,
-			discount,
-			totalValue,
+		updateBudget({
+			...budget,
 			name,
 			clientName,
 			address,
+			items: budgetItems,
+			discount,
+			totalValue,
 			description,
 		});
 		onClose();
-		Alert.alert("Sucesso", "Orçamento salvo na lista!");
+		Alert.alert("Sucesso", "Orçamento atualizado!");
 	};
 
-	const handleInvalidSubmit = (errors: FieldErrors<SaveBudgetFormData>) => {
+	const handleInvalidSubmit = (errors: FieldErrors<EditBudgetFormData>) => {
 		const errorMessage =
 			errors.name?.message ??
 			errors.clientName?.message ??
@@ -87,7 +94,7 @@ export const SaveBudget = ({ visible, onClose }: SaveBudgetProps) => {
 					<View style={styles.overlay}>
 						<TouchableWithoutFeedback>
 							<View style={styles.modalContent}>
-								<Text style={styles.title}>Salvar Orçamento</Text>
+								<Text style={styles.title}>Editar Orçamento</Text>
 								<Controller
 									control={control}
 									name="name"
@@ -137,11 +144,11 @@ export const SaveBudget = ({ visible, onClose }: SaveBudgetProps) => {
 									<CustomButton
 										style={styles.saveButton}
 										onPress={handleSubmit(
-											handleSaveBudget,
+											handleEditBudget,
 											handleInvalidSubmit,
 										)}
 									>
-										<Text style={styles.buttonText}>Salvar</Text>
+										<Text style={styles.buttonText}>Atualizar</Text>
 									</CustomButton>
 								</View>
 							</View>

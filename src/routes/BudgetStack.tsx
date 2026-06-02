@@ -2,6 +2,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { TouchableOpacity } from "react-native";
 import { BudgetCreateScreen } from "../features/budget/screens/BudgetCreateScreen";
+import { BudgetEditScreen } from "../features/budget/screens/BudgetEditScreen";
 import { BudgetIndexScreen } from "../features/budget/screens/BudgetIndexScreen";
 import { BudgetListScreen } from "../features/budget/screens/BudgetListScreen";
 import { useBudgetStore } from "../features/budget/stores/BudgetStore";
@@ -9,6 +10,7 @@ import { useBudgetStore } from "../features/budget/stores/BudgetStore";
 export type BudgetStackParamList = {
 	BudgetIndex: undefined;
 	BudgetCreate: undefined;
+	BudgetEdit: { id: string };
 	BudgetList: undefined;
 };
 
@@ -35,6 +37,11 @@ export const BudgetStack = () => {
 						</TouchableOpacity>
 					),
 				}}
+			/>
+			<Stack.Screen
+				name="BudgetEdit"
+				component={BudgetEditScreen}
+				options={{ title: "Editar Orçamento" }}
 			/>
 			<Stack.Screen
 				name="BudgetList"
