@@ -1,30 +1,18 @@
-import { useMemo, useState } from "react";
-import {
-	FlatList,
-	KeyboardAvoidingView,
-	StyleSheet,
-	Text,
-	View,
-} from "react-native";
+import { useState } from "react";
+import { FlatList, KeyboardAvoidingView, StyleSheet, View } from "react-native";
 import { CustomButton } from "../../../components/CustomButton";
 import { EmptyText } from "../../../components/EmptyText";
-import { FormInput } from "../../../components/FormInput";
-import { formatCurrencyBRL } from "../../../utils/formatCurrencyBRL";
 import { BudgetListItem } from "../components/BudgetListItem";
+import { BudgetSummary } from "../components/BudgetSummary";
 import { SaveBudget } from "../components/SaveBudget";
 import { useBudgetStore } from "../stores/BudgetStore";
 import { handleGenerateBudgetPdf } from "../utils/handleGenerateBudgetPdf";
 
 export const BudgetCreateScreen = () => {
 	const [saveModalVisible, setSaveModalVisible] = useState(false);
-	const { budgetItems, discount, setDiscount, totalValue } = useBudgetStore(
+	const { budgetItems, discount, totalValue, description } = useBudgetStore(
 		(state) => state,
 	);
-
-	const totalWithDiscount = useMemo(() => {
-		const discountValue = Number.parseFloat(discount.replace(",", ".") || "0");
-		return totalValue - discountValue;
-	}, [discount, totalValue]);
 
 	return (
 		<KeyboardAvoidingView
@@ -40,34 +28,17 @@ export const BudgetCreateScreen = () => {
 						<EmptyText text="Nenhum item adicionado ao orçamento. Use a calculadora para adicionar itens." />
 					}
 				/>
-				{budgetItems.length !== 0 && (
-					<>
-						<View style={styles.discountContainer}>
-							<FormInput
-								label="Desconto em R$"
-								placeholder="0,00"
-								keyboardType="numeric"
-								value={discount}
-								onChangeText={setDiscount}
-							/>
-						</View>
-						<View style={styles.totalContainer}>
-							<Text style={styles.totalLabel}>Valor Total:</Text>
-							<Text style={styles.totalValue}>
-								{formatCurrencyBRL(totalWithDiscount)}
-							</Text>
-						</View>
-					</>
-				)}
+				{budgetItems.length !== 0 && <BudgetSummary />}
 
 				<CustomButton
 					title="Gerar Orçamento"
 					style={{ marginTop: 10 }}
 					onPress={() =>
 						handleGenerateBudgetPdf({
-							budgetItems,
+							items: budgetItems,
 							discount,
 							totalValue,
+							description,
 						})
 					}
 				/>
@@ -103,25 +74,5 @@ const styles = StyleSheet.create({
 		marginBottom: 10,
 		borderLeftWidth: 5,
 		borderLeftColor: "#4CAF50",
-	},
-	totalContainer: {
-		flexDirection: "row",
-		justifyContent: "space-between",
-		padding: 15,
-		backgroundColor: "#fff",
-		borderRadius: 10,
-		marginBottom: 10,
-		borderLeftWidth: 5,
-		borderLeftColor: "#4CAF50",
-	},
-	totalLabel: {
-		fontSize: 18,
-		fontWeight: "bold",
-		color: "black",
-	},
-	totalValue: {
-		fontSize: 18,
-		fontWeight: "bold",
-		color: "#2E7D32",
 	},
 });

@@ -1,27 +1,32 @@
 import * as Print from "expo-print";
 import * as Sharing from "expo-sharing";
 import { Alert } from "react-native";
-import type { BudgetItem } from "../../../types";
+import type { Budget } from "../../../types";
 import { buildBudgetPdfHtml } from "./buildBudgetPdfHtml";
 
-type HandleGenerateBudgetPdfProps = {
-	budgetItems: BudgetItem[];
-	discount: string;
-	totalValue: number;
-};
+type HandleGenerateBudgetPdfProps = Pick<
+	Budget,
+	"items" | "discount" | "totalValue" | "description"
+>;
 
 export const handleGenerateBudgetPdf = async ({
-	budgetItems,
+	items,
 	discount,
 	totalValue,
+	description,
 }: HandleGenerateBudgetPdfProps) => {
-	if (budgetItems.length === 0) {
+	if (items.length === 0) {
 		Alert.alert("Orçamento vazio", "Adicione itens antes de gerar o PDF.");
 		return;
 	}
 
 	try {
-		const html = buildBudgetPdfHtml({ budgetItems, discount, totalValue });
+		const html = buildBudgetPdfHtml({
+			items,
+			discount,
+			totalValue,
+			description,
+		});
 		const { uri } = await Print.printToFileAsync({ html });
 
 		const canShare = await Sharing.isAvailableAsync();

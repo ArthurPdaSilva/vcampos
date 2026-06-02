@@ -8,6 +8,8 @@ interface BudgetState {
 	budgets: Budget[];
 	discount: string;
 	totalValue: number;
+	description: string;
+	setDescription: (value: string) => void;
 	setDiscount: (value: string) => void;
 	clearBudget: () => void;
 	addBudgetItem: (item: Omit<BudgetItem, "id">) => void;
@@ -25,6 +27,11 @@ export const useBudgetStore = create<BudgetState>()(
 			budgets: [],
 			discount: "",
 			totalValue: 0,
+			description: "",
+
+			setDescription: (value) => {
+				set({ description: value });
+			},
 
 			setDiscount: (value) => {
 				set({ discount: value });

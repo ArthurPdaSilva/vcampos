@@ -1,4 +1,4 @@
-import type { BudgetItem } from "../../../types";
+import type { Budget } from "../../../types";
 import { formatCurrencyBRL } from "../../../utils/formatCurrencyBRL";
 
 const escapeHtml = (value: string) =>
@@ -9,18 +9,19 @@ const escapeHtml = (value: string) =>
 		.replaceAll('"', "&quot;")
 		.replaceAll("'", "&#39;");
 
-type BudgetPdfData = {
-	budgetItems: BudgetItem[];
-	discount: string;
-	totalValue: number;
-};
+type BudgetPdfData = Pick<
+	Budget,
+	"items" | "discount" | "totalValue" | "description"
+>;
 
 export const buildBudgetPdfHtml = ({
-	budgetItems,
+	items,
 	discount,
 	totalValue,
+	description,
 }: BudgetPdfData) => {
 	const hasDiscount = discount !== "";
+	const hasDescription = description.trim().length > 0;
 	const parsedDiscount = Number.parseFloat(discount.replace(",", ".") || "0");
 	const discountValue = Number.isFinite(parsedDiscount) ? parsedDiscount : 0;
 	const finalTotalValue = hasDiscount
@@ -40,22 +41,30 @@ export const buildBudgetPdfHtml = ({
 		process.env.EXPO_PUBLIC_COMPANY_INSTAGRAM?.trim() || "Não informado",
 	);
 
-	const rows = budgetItems
+	const rows = items
 		.map((item) => {
-			const description = item.description?.trim()
+			const itemDescription = item.description?.trim()
 				? escapeHtml(item.description)
 				: "Item sem descrição";
 
 			return `
 				<tr>
 					<td>${item.quantity}</td>
-					<td>${description}</td>
+					<td>${itemDescription}</td>
 					<td>${formatCurrencyBRL(item.value)}</td>
 					<td>${formatCurrencyBRL(item.finalValue)}</td>
 				</tr>
 			`;
 		})
 		.join("");
+
+	const descriptionSection = hasDescription
+		? `
+			<div class="budget-description">
+				<p><strong>Descrição:</strong> ${escapeHtml(description.trim())}</p>
+			</div>
+		`
+		: "";
 
 	const totalRows = hasDiscount
 		? `
@@ -155,6 +164,13 @@ export const buildBudgetPdfHtml = ({
 					font-weight: bold;
 				}
 
+				.budget-description {
+					margin-top: 18px;
+					padding: 12px;
+					border: 1px solid black;
+					min-height: 42px;
+				}
+
 				.total-label {
 					background-color: #00d2ff;
 					text-align: right;
@@ -230,6 +246,8 @@ export const buildBudgetPdfHtml = ({
 						${totalRows}
 					</tfoot>
 				</table>
+
+				${descriptionSection}
 
 				<div class="signature">
 					<p>Assinatura do Recebedor</p>

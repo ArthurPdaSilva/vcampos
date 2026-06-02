@@ -42,6 +42,7 @@ export type Budget = {
 	name: string;
 	clientName: string;
 	address: string;
+	description: string;
 };
 
 export const GLASS_SHEET_SIZE = getEnvNumber(

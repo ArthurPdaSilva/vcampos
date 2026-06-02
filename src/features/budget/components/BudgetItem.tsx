@@ -42,9 +42,10 @@ export const BudgetItem = ({ item }: { item: Budget }) => {
 				<CustomButton
 					onPress={() =>
 						handleGenerateBudgetPdf({
-							budgetItems: item.items,
+							items: item.items,
 							discount: item.discount,
 							totalValue: item.totalValue,
+							description: item.description,
 						})
 					}
 					style={styles.actionButton}
