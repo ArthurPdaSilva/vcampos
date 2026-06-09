@@ -72,8 +72,8 @@ export const EditBudget = ({ visible, onClose, budget }: EditBudgetProps) => {
 			description,
 		});
 
-		clearBudget();
 		onClose();
+		clearBudget();
 		Alert.alert("Sucesso", "Orçamento atualizado!");
 	};
 
