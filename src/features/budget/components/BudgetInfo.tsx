@@ -44,10 +44,7 @@ export const BudgetInfo = ({ visible, item, onClose }: BudgetInfoProps) => {
 					{item.description?.trim().length > 0 && (
 						<View style={styles.descriptionContainer}>
 							<Text style={styles.bold}>Descrição do Orçamento:</Text>
-							<Text style={styles.descriptionText}>
-								Nelsin rei delus. O cara da noiteda nervosa. Tem 10k na conta e
-								vota no pt
-							</Text>
+							<Text style={styles.descriptionText}>{item.description}</Text>
 						</View>
 					)}
 					<CustomButton onPress={onClose} style={styles.closeButton}>
