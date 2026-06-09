@@ -27,6 +27,7 @@ export const handleGenerateBudgetPdf = async ({
 			totalValue,
 			description,
 		});
+		
 		const { uri } = await Print.printToFileAsync({ html });
 
 		const canShare = await Sharing.isAvailableAsync();
@@ -42,9 +43,9 @@ export const handleGenerateBudgetPdf = async ({
 		});
 	} catch (error: unknown) {
 		if (error instanceof Error) {
-			Alert.alert("Ocorreu um erro: ", error.message);
+			Alert.alert("Ocorreu um erro!", error.message);
 		}
 
-		Alert.alert("Ocorreu um erro: ", String(error));
+		Alert.alert("Ocorreu um erro!", String(error));
 	}
 };
