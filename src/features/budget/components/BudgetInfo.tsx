@@ -41,10 +41,12 @@ export const BudgetInfo = ({ visible, item, onClose }: BudgetInfoProps) => {
 							</View>
 						))}
 					</ScrollView>
-					{item.description?.trim().length > 0 && (
+					{(item.description ?? "").trim().length > 0 && (
 						<View style={styles.descriptionContainer}>
 							<Text style={styles.bold}>Descrição do Orçamento:</Text>
-							<Text style={styles.descriptionText}>{item.description}</Text>
+							<Text style={styles.descriptionText}>
+								{item.description ?? ""}
+							</Text>
 						</View>
 					)}
 					<CustomButton onPress={onClose} style={styles.closeButton}>

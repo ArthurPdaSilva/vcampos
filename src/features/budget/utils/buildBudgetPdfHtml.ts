@@ -21,7 +21,7 @@ export const buildBudgetPdfHtml = ({
 	description,
 }: BudgetPdfData) => {
 	const hasDiscount = discount !== "";
-	const hasDescription = description.trim().length > 0;
+	const hasDescription = (description ?? "").trim().length > 0;
 	const parsedDiscount = Number.parseFloat(discount.replace(",", ".") || "0");
 	const discountValue = Number.isFinite(parsedDiscount) ? parsedDiscount : 0;
 	const finalTotalValue = hasDiscount
@@ -61,7 +61,7 @@ export const buildBudgetPdfHtml = ({
 	const descriptionSection = hasDescription
 		? `
 			<div class="budget-description">
-				<p><strong>Descrição:</strong> ${escapeHtml(description.trim())}</p>
+				<p><strong>Descrição:</strong> ${escapeHtml((description ?? "").trim())}</p>
 			</div>
 		`
 		: "";

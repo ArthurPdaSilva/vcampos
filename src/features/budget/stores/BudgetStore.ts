@@ -48,7 +48,7 @@ export const useBudgetStore = create<BudgetState>()(
 					budgetItems: budget.items,
 					discount: budget.discount,
 					totalValue: budget.totalValue,
-					description: budget.description,
+					description: budget.description ?? "",
 				});
 			},
 

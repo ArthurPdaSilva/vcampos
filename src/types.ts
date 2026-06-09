@@ -47,7 +47,7 @@ export type Budget = {
 	name: string;
 	clientName: string;
 	address: string;
-	description: string;
+	description?: string;
 	status?: BudgetStatus;
 };
 
