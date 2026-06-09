@@ -40,7 +40,11 @@ export const handleGenerateBudgetPdf = async ({
 			dialogTitle: "Baixar/Compartilhar orçamento",
 			UTI: "com.adobe.pdf",
 		});
-	} catch {
-		Alert.alert("Erro", "Não foi possível gerar o PDF do orçamento.");
+	} catch (error: unknown) {
+		if (error instanceof Error) {
+			Alert.alert("Ocorreu um erro: ", error.message);
+		}
+
+		Alert.alert("Ocorreu um erro: ", String(error));
 	}
 };
