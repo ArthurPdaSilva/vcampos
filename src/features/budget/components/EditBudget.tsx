@@ -27,8 +27,14 @@ type EditBudgetProps = {
 };
 
 export const EditBudget = ({ visible, onClose, budget }: EditBudgetProps) => {
-	const { updateBudget, budgetItems, discount, totalValue, description } =
-		useBudgetStore((state) => state);
+	const {
+		updateBudget,
+		budgetItems,
+		discount,
+		totalValue,
+		description,
+		clearBudget,
+	} = useBudgetStore((state) => state);
 	const { control, handleSubmit, reset } = useForm<EditBudgetFormData>({
 		resolver: zodResolver(editBudgetSchema),
 		defaultValues: {
@@ -65,6 +71,8 @@ export const EditBudget = ({ visible, onClose, budget }: EditBudgetProps) => {
 			totalValue,
 			description,
 		});
+
+		clearBudget();
 		onClose();
 		Alert.alert("Sucesso", "Orçamento atualizado!");
 	};

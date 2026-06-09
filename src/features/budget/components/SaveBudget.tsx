@@ -25,8 +25,14 @@ type SaveBudgetProps = {
 };
 
 export const SaveBudget = ({ visible, onClose }: SaveBudgetProps) => {
-	const { saveBudget, description, budgetItems, discount, totalValue } =
-		useBudgetStore((state) => state);
+	const {
+		saveBudget,
+		description,
+		budgetItems,
+		discount,
+		totalValue,
+		clearBudget,
+	} = useBudgetStore((state) => state);
 	const { control, handleSubmit, reset } = useForm<SaveBudgetFormData>({
 		resolver: zodResolver(saveBudgetSchema),
 		defaultValues: {
@@ -59,6 +65,7 @@ export const SaveBudget = ({ visible, onClose }: SaveBudgetProps) => {
 			description,
 		});
 		onClose();
+		clearBudget();
 		Alert.alert("Sucesso", "Orçamento salvo na lista!");
 	};
 
