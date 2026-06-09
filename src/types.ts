@@ -34,6 +34,11 @@ export type BudgetItem = {
 	dimensions: Dimensions;
 };
 
+export enum BudgetStatus {
+	EmAberto = "Em aberto",
+	Finalizado = "Finalizado",
+}
+
 export type Budget = {
 	id: string;
 	items: BudgetItem[];
@@ -43,6 +48,7 @@ export type Budget = {
 	clientName: string;
 	address: string;
 	description: string;
+	status?: BudgetStatus;
 };
 
 export const GLASS_SHEET_SIZE = getEnvNumber(

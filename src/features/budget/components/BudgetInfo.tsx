@@ -41,6 +41,15 @@ export const BudgetInfo = ({ visible, item, onClose }: BudgetInfoProps) => {
 							</View>
 						))}
 					</ScrollView>
+					{item.description?.trim().length > 0 && (
+						<View style={styles.descriptionContainer}>
+							<Text style={styles.bold}>Descrição do Orçamento:</Text>
+							<Text style={styles.descriptionText}>
+								Nelsin rei delus. O cara da noiteda nervosa. Tem 10k na conta e
+								vota no pt
+							</Text>
+						</View>
+					)}
 					<CustomButton onPress={onClose} style={styles.closeButton}>
 						<Text style={styles.closeButtonText}>Fechar</Text>
 					</CustomButton>
@@ -97,6 +106,19 @@ const styles = StyleSheet.create({
 	},
 	finalValueText: {
 		color: "#2E7D32",
+	},
+	descriptionContainer: {
+		marginBottom: 12,
+		padding: 10,
+		backgroundColor: "#FAFAFA",
+		borderRadius: 8,
+		borderWidth: 1,
+		borderColor: "#EEE",
+	},
+	descriptionText: {
+		color: "#444",
+		marginTop: 6,
+		fontSize: 14,
 	},
 	closeButton: {
 		backgroundColor: "#2196F3",

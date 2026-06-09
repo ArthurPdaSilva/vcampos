@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import { CustomButton } from "../../../components/CustomButton";
 import { FormInput } from "../../../components/FormInput";
+import { BudgetStatus } from "../../../types";
 import {
 	type SaveBudgetFormData,
 	saveBudgetSchema,
@@ -63,6 +64,7 @@ export const SaveBudget = ({ visible, onClose }: SaveBudgetProps) => {
 			clientName,
 			address,
 			description,
+			status: BudgetStatus.EmAberto,
 		});
 		onClose();
 		clearBudget();
